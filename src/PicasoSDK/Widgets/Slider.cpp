@@ -14,6 +14,8 @@ Slider::Slider(Serial_Commander& lcd,
 		uint16_t height) :
 	Widget(lcd)
 {
+	add_event_handler<Touch_Screen_Event>(&Slider::touch_event_handler, this);
+
     m_boundingBox.origin.x = origin_x;
     m_boundingBox.origin.y = origin_y;
 
