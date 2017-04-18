@@ -40,7 +40,7 @@ Slider::Slider(Serial_Commander& lcd,
 Slider::Slider(Serial_Commander& lcd) :
 		Widget(lcd)
 {
-    m_per_cent = 0.5;
+	add_event_handler<Touch_Screen_Event>(&Slider::touch_event_handler, this);
 
     m_boundingBox.origin.x = 0;
     m_boundingBox.origin.y = 0;
@@ -58,6 +58,7 @@ Slider::Slider(Serial_Commander& lcd) :
     m_size_standard.height = m_boundingBox.size.height;
 
     touch = 0;
+    m_per_cent = 0.5;
 }
 
 Slider::~Slider()
