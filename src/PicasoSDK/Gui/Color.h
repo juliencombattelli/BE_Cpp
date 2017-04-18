@@ -1,14 +1,19 @@
-/*
- * Color.h
- *
- *  Created on: 16 avr. 2017
- *      Author: JulienCombattelli
- */
+//============================================================================
+// Name        : Color.h
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 18 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides color values used by Picaso GPUs
+//============================================================================
 
-#ifndef PICASOSDK_GUI_COLOR_H_
-#define PICASOSDK_GUI_COLOR_H_
+#ifndef PICASO_COLOR_H_
+#define PICASO_COLOR_H_
 
 #include <type_traits>
+#include <cstdint>
 
 namespace Picaso
 {
@@ -159,9 +164,9 @@ enum class Color: uint16_t
 	YELLOWGREEN     	= 0x9E66
 };
 
-inline std::underlying_type_t<Color> Color_to_Integral(Color c)
+inline std::underlying_type<Color>::type Color_to_Integral(Color c)
 {
-	return static_cast<std::underlying_type_t<Color>>(c);
+	return static_cast<typename std::underlying_type<Color>::type>(c);
 }
 
 inline Color Integral_to_Color(std::underlying_type_t<Color> i)
@@ -171,4 +176,4 @@ inline Color Integral_to_Color(std::underlying_type_t<Color> i)
 
 } // namespace Picaso
 
-#endif /* PICASOSDK_GUI_COLOR_H_ */
+#endif // PICASO_COLOR_H_

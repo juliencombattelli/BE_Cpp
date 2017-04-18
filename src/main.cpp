@@ -1,7 +1,7 @@
 
 
 #include "touch_dispatcher.h"
-#include "PicasoSDK/LcdDriver/Picaso_Serial_Commander.h"
+#include "PicasoSDK/LcdDriver/Serial_Commander.h"
 #include "PicasoSDK/Widgets/Button.h"
 #include "PicasoSDK/Core/Events.h"
 #include <iostream>

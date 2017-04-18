@@ -1,16 +1,15 @@
 //============================================================================
 // Name        : Event.cpp
-// Author      : Julien Combattelli
-// EMail       : julien.combattelli@hotmail.com
-// Date		   : 19 avr. 2016
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 19 avr. 2017
 // Version     : 1.0.0
-// Copyright   : This file is part of MUL project which is released under
+// Copyright   : This file is part of PicasoSDK project which is released under
 //               MIT license. See file LICENSE.txt for full license details
 // Description : It provides an observer implementation to handling events
 //============================================================================
 
-#include "Event.h"
-
+#include "PicasoSDK/Core/Event.h"
 #include <algorithm>
 #include <stdexcept>
 

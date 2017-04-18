@@ -1,14 +1,18 @@
-/*
- * Events.h
- *
- *  Created on: 16 avr. 2017
- *      Author: JulienCombattelli
- */
+//============================================================================
+// Name        : Events.h
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 19 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides all necessary events used by PicasoSDK
+//============================================================================
 
-#ifndef PICASOSDK_CORE_EVENTS_H_
-#define PICASOSDK_CORE_EVENTS_H_
+#ifndef PICASO_EVENTS_H_
+#define PICASO_EVENTS_H_
 
-#include "Event.h"
+#include "PicasoSDK/Core/Event.h"
 
 namespace Picaso
 {
@@ -45,4 +49,4 @@ struct Slider_Moved : public Event
 
 } // namespace Picaso
 
-#endif /* PICASOSDK_CORE_EVENTS_H_ */
+#endif // PICASO_EVENTS_H_

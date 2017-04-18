@@ -1,15 +1,19 @@
-/*
- * Widget.h
- *
- *  Created on: 13 avr. 2017
- *      Author: JulienCombattelli
- */
+//============================================================================
+// Name        : Widget.h
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 19 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a base class for all widgets use by PicasoSDK
+//============================================================================
 
-#ifndef PICASOSDK_WIDGETS_WIDGET_H_
-#define PICASOSDK_WIDGETS_WIDGET_H_
+#ifndef PICASO_WIDGET_H_
+#define PICASO_WIDGET_H_
 
 #include "PicasoSDK/Core/Event.h"
-#include "PicasoSDK/LcdDriver/Picaso_Serial_Commander.h"
+#include "PicasoSDK/LcdDriver/Serial_Commander.h"
 #include "PicasoSDK/Gui/Rect.h"
 
 namespace Picaso
@@ -22,9 +26,9 @@ public:
 	Widget(Serial_Commander& lcd) : m_lcd(lcd){}
 	virtual ~Widget() = default;
 
-protected:
+	virtual void show() = 0;
 
-	virtual void touch_event_handler(Sender&, Event const&) {}
+protected:
 
 	Serial_Commander& m_lcd;
 	Rect m_boundingBox;
@@ -32,4 +36,4 @@ protected:
 
 } // namespace Picaso
 
-#endif /* PICASOSDK_WIDGETS_WIDGET_H_ */
+#endif // PICASO_WIDGET_H_

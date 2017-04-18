@@ -1,41 +1,34 @@
-#include "Label.h"
+//============================================================================
+// Name        : Label.cpp
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 19 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a label widget
+//============================================================================
+
+#include "PicasoSDK/Widgets/Label.h"
 
 namespace Picaso
 {
 
-Label::Label(Serial_Commander& lcd,std::string text, Color foreground_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size, Alignment_H h_alignment, Alignment_V v_alignment, bool auto_update) :
+Label::Label(Serial_Commander& lcd, const std::string& text, Color foreground_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size, Alignment_H h_alignment, Alignment_V v_alignment, bool auto_update) :
 	Widget(lcd)
 {
-    m_lcd = lcd;
-
-    m_alignment.h = h_alignment;
-    m_alignment.v = v_alignment;
-    m_boundingBox.origin.x = x_origin;
-    m_boundingBox.origin.y = y_origin;
-    m_boundingBox.size.width = width;
-    m_boundingBox.size.height = height;
-    m_foreground_color = foreground_color;
-    m_background_color = Color::BLACK;
-    m_font_size = font_size;
-    m_text = text;
     m_auto_update = auto_update;
 
-    update_attributes();
-    write_text();
+    create(text, foreground_color, x_origin, y_origin, width, height, font_size, h_alignment, v_alignment);
+
+    show();
 }
 
 Label::Label(Serial_Commander& lcd, bool auto_update) : Widget(lcd)
 {
-    m_alignment.h = Alignment_H::h_left;
-    m_alignment.v = Alignment_V::v_top;
-    m_boundingBox.origin.x = 0;
-    m_boundingBox.origin.y = 0;
-    m_boundingBox.size.width = 20;
-    m_boundingBox.size.height = 20;
-    m_foreground_color = Color::WHITE;
-    m_background_color = Color::BLACK;
-    m_font_size = 1;
     m_auto_update = auto_update;
+
+    create("", Color::WHITE, 0, 0, 20, 20, 1, Alignment_H::LEFT, Alignment_V::TOP);
 }
 
 Label::~Label()
@@ -43,11 +36,6 @@ Label::~Label()
 
 }
 
-
-/*
- * private functions
- *
- */
 void Label::update_attributes()
 {
     m_lcd.txt_set_font(3);
@@ -102,15 +90,15 @@ void Label::write_text()
 
         switch(m_alignment.v)
         {
-            case Alignment_V::v_top:
+            case Alignment_V::TOP:
                 y_location = m_boundingBox.origin.y;
                 break;
 
-            case Alignment_V::v_bottom:
+            case Alignment_V::BOTTOM:
                 y_location = (m_boundingBox.origin.y + m_boundingBox.size.height) - sector*m_lcd.txt_char_height('0');
                 break;
 
-            case Alignment_V::v_center:
+            case Alignment_V::CENTER:
                 y_location = ((m_boundingBox.size.height - sector*m_lcd.txt_char_height('0')) / 2) + m_boundingBox.origin.y;
                 break;
         }
@@ -120,15 +108,15 @@ void Label::write_text()
         {
              switch(m_alignment.h)
             {
-                case Alignment_H::h_left:
+                case Alignment_H::LEFT:
                     x_location = m_boundingBox.origin.x;
                     break;
 
-                case Alignment_H::h_right:
+                case Alignment_H::RIGHT:
                 	x_location = (m_boundingBox.origin.x + m_boundingBox.size.width) - nb_car_per_sector[i]*m_lcd.txt_char_width('0');
                 	break;
 
-                case Alignment_H::h_center:
+                case Alignment_H::CENTER:
                 	x_location = ((m_boundingBox.size.width - nb_car_per_sector[i]*m_lcd.txt_char_width('0'))/2) + m_boundingBox.origin.x;
                 	break;
             }
@@ -143,12 +131,7 @@ void Label::write_text()
     }
 }
 
-/*
- * public functions
- *
- */
-
-void Label::show_label()
+void Label::show()
 {
     update_attributes();
     write_text();
@@ -219,7 +202,7 @@ void Label::change_font_size(int font_size)
     }
 }
 
-void Label::change_text(std::string text)
+void Label::change_text(const std::string& text)
 {
     m_text = text;
     if(m_auto_update)
@@ -229,7 +212,7 @@ void Label::change_text(std::string text)
     }
 }
 
-void Label::new_label(std::string text, Color foreground_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size, Alignment_H h_alignment, Alignment_V v_alignment)
+void Label::create(const std::string& text, Color foreground_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size, Alignment_H h_alignment, Alignment_V v_alignment)
 {
     m_alignment.h = h_alignment;
     m_alignment.v = v_alignment;
@@ -238,6 +221,7 @@ void Label::new_label(std::string text, Color foreground_color, uint16_t x_origi
     m_boundingBox.size.width = width;
     m_boundingBox.size.height = height;
     m_foreground_color = foreground_color;
+    m_background_color = Color::BLACK;
     m_font_size = font_size;
     m_text = text;
 

@@ -1,3 +1,14 @@
+//============================================================================
+// Name        : Slider.cpp
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 19 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a slider widget
+//============================================================================
+
 #include "PicasoSDK/Widgets/Slider.h"
 #include "PicasoSDK/Core/Events.h"
 
@@ -13,19 +24,21 @@ Slider::Slider(Serial_Commander& lcd,
 		uint16_t width,
 		uint16_t height,
 		bool auto_update) :
-	Widget(lcd)
+		Touchable_Widget(lcd)
 {
 	m_auto_update = auto_update;
-	create_slider(border_color, fill_color, button_color, origin_x, origin_y, width, height);
 
-    show_slider();
+	create(border_color, fill_color, button_color, origin_x, origin_y, width, height);
+
+    show();
 }
 
 Slider::Slider(Serial_Commander& lcd, bool auto_update) :
-		Widget(lcd)
+		Touchable_Widget(lcd)
 {
 	m_auto_update = auto_update;
-	create_slider(Color::ORANGE, Color::BLACK, Color::GRAY, 0, 0, 20, 20);
+
+	create(Color::ORANGE, Color::BLACK, Color::GRAY, 0, 0, 20, 20);
 }
 
 Slider::~Slider()
@@ -51,15 +64,15 @@ void Slider::touch_event_handler(Sender& sender, const Event& event)
 						m_border_color);
                 update_button();
                 raise(Slider_Moved(m_per_cent));
-                is_touch = true;
+                m_is_touch = true;
             }
             break;
 
         case Touch_Event::touch_ended :
-			if(is_touch == true)
+			if(m_is_touch == true)
 			{
-				show_slider();
-				is_touch=false;
+				show();
+				m_is_touch=false;
 			}
 			break;
 
@@ -77,7 +90,7 @@ void Slider::touch_event_handler(Sender& sender, const Event& event)
     }
 }
 
-void Slider::show_slider()
+void Slider::show()
 {
     m_lcd.gfx_draw_filled_rectangle(
     		m_boundingBox.origin.x,
@@ -152,27 +165,24 @@ void Slider::change_color(Color border_color, Color fill_color)
 {
     m_border_color = border_color;
     m_fill_color = fill_color;
-    if(m_auto_update)
-    	show_slider();
+    if(m_auto_update) show();
 }
 
 void Slider::change_size(uint16_t width, uint16_t height)
 {
 	m_boundingBox.size.height = height;
 	m_boundingBox.size.width = width;
-	if(m_auto_update)
-		show_slider();
+	if(m_auto_update) show();
 }
 
 void Slider::change_origin(uint16_t x_origin, uint16_t y_origin)
 {
 	m_boundingBox.origin.x = x_origin;
 	m_boundingBox.origin.y = y_origin;
-	if(m_auto_update)
-		show_slider();
+	if(m_auto_update) show();
 }
 
-void Slider::create_slider(Color border_color, Color fill_color, Color button_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height)
+void Slider::create(Color border_color, Color fill_color, Color button_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height)
 {
 	m_boundingBox.origin.x = x_origin;
 	m_boundingBox.origin.y = y_origin;
@@ -189,7 +199,7 @@ void Slider::create_slider(Color border_color, Color fill_color, Color button_co
 	m_size_standard.width = 12;
 	m_size_standard.height = height;
 
-    is_touch = false;
+    m_is_touch = false;
 	m_per_cent = 0.5;
 
 	add_event_handler<Touch_Screen_Event>(&Slider::touch_event_handler, this);

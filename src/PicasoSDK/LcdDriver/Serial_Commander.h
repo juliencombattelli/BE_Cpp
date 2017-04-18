@@ -1,13 +1,19 @@
-/*
- * uLCD_4DLibrary.hpp
- * This file is a part of uLCD_4DLibrary
- * Copyright (c) 2015 juliencombattelli, SRTH
- */
-#ifndef ULCD_LIB
-#define ULCD_LIB
+//============================================================================
+// Name        : Serial_commander.h
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 19 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a class managing serial communications with Picaso GPUs
+//============================================================================
 
-#include "mraa.hpp"
+#ifndef PICASO_SERIAL_COMMANDER_H_
+#define PICASO_SERIAL_COMMANDER_H_
+
 #include "PicasoSDK/Gui/Color.h"
+#include <mraa.hpp>
 #include <string>
 
 namespace Picaso
@@ -229,4 +235,4 @@ private :
 
 } // namespace Picaso
 
-#endif
+#endif // PICASO_SERIAL_COMMANDER_H_

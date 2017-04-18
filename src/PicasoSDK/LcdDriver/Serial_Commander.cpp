@@ -1,10 +1,15 @@
-/*
-* Serial_Commander.cpp
-* This file is a part of Serial_Commander
-* Copyright (c) 2015 juliencombattelli, SRTH
-*/
+//============================================================================
+// Name        : Serial_commander.cpp
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 19 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a class managing serial communications with Picaso GPUs
+//============================================================================
 
-#include "Picaso_Serial_Commander.h"
+#include "PicasoSDK/LcdDriver/Serial_Commander.h"
 
 namespace Picaso
 {
@@ -22,10 +27,6 @@ Serial_Commander::Serial_Commander(int uart, int reset_pin, uint32_t baud_rate) 
     //while(file_mount() == 0xFFFE);
     file_mount();
 }
-
-/*
-* private function
-*/
 
 void Serial_Commander::clear_rx_buffer()
 {
@@ -104,10 +105,6 @@ uint8_t Serial_Commander::code_baud_rate(uint32_t baud_rate)
         default:        return 20;
     }
 }
-
-/*
-* public function
-*/
 
 	/*txt function*/
 uint8_t Serial_Commander::txt_move_cursor(uint16_t line, uint16_t column)

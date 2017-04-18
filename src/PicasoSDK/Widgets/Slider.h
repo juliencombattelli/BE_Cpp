@@ -1,63 +1,53 @@
-/*
- * ulcd_slider.h
- *
- *
- *
- */
+//============================================================================
+// Name        : Slider
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 19 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a slider widget
+//============================================================================
 
-#ifndef PICASO_SLIDER_H
-#define PICASO_SLIDER_H
+#ifndef PICASO_SLIDER_H_
+#define PICASO_SLIDER_H_
 
-#include "PicasoSDK/Widgets/Widget.h"
-//#include <iostream>
+#include "PicasoSDK/Widgets/Touchable_Widget.h"
 #include <string>
 
 namespace Picaso
 {
 
-class Slider : public Widget
+class Slider : public Touchable_Widget
 {
-public :
+public:
 
-    // constructor
-    Slider(Serial_Commander& lcd,
-    		Color border_color,
-			Color fill_color = Color::BLACK,
-			Color button_color = Color::GRAY,
-			uint16_t origin_x = 0,
-			uint16_t origin_y = 0,
-			uint16_t width = 20,
-			uint16_t height = 20,
-			bool auto_update = true);
-
+    Slider(Serial_Commander& lcd, Color border_color, Color fill_color = Color::BLACK, Color button_color = Color::GRAY, uint16_t origin_x = 0, uint16_t origin_y = 0, uint16_t width = 20, uint16_t height = 20, bool auto_update = true);
     Slider(Serial_Commander& lcd, bool auto_update = true);
 
-	~Slider();
+	virtual ~Slider();
 
-    void show_slider();
+    virtual void show() override;
+
+    void create(Color border_color = Color::ORANGE, Color fill_color = Color::BLACK, Color button_color = Color::GRAY, uint16_t x_origin = 0, uint16_t y_origin = 0, uint16_t width = 20, uint16_t height = 20);
 
     void change_color(Color border_color, Color fill_color);
-
     void change_size(uint16_t width, uint16_t height);
-
     void change_origin(uint16_t x_origin, uint16_t y_origin);
 
-    void create_slider(Color border_color = Color::ORANGE, Color fill_color = Color::BLACK, Color button_color = Color::GRAY, uint16_t x_origin = 0, uint16_t y_origin = 0, uint16_t width = 20, uint16_t height = 20);
+    float get_per_cent() const { return m_per_cent; }
 
-    float get_per_cent() const {return m_per_cent;}
+private:
 
-    virtual void touch_event_handler(Sender& sender, const Event& event);
-
-private :
-
-    static const int border_width = 2;
+    virtual void touch_event_handler(Sender&, const Event&) override;
 
     void update_button();
+
+    static const int border_width = 2;
 
     Color m_border_color;
     Color m_fill_color;
     Color m_button_color;
-    bool is_touch;
     float m_per_cent;
     Size m_size_standard;
     Size m_size_pressed;
@@ -66,5 +56,5 @@ private :
 
 } // namespace Picaso
 
-#endif // PICASO_SLIDER_H
+#endif // PICASO_SLIDER_H_
 

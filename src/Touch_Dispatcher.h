@@ -8,7 +8,7 @@
 #define TOUCH_DISPATCHER_H
 
 #include <vector>
-#include "PicasoSDK/LcdDriver/Picaso_Serial_Commander.h"
+#include "PicasoSDK/LcdDriver/Serial_Commander.h"
 #include "PicasoSDK/Core/Event.h"
 #include "PicasoSDK/Widgets/Widget.h"
 

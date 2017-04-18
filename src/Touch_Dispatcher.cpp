@@ -1,5 +1,5 @@
 #include "touch_dispatcher.h"
-#include "PicasoSDK/Gui/Point.h"
+#include "PicasoSDK/Gui/Rect.h"
 #include "PicasoSDK/Core/Events.h"
 
 namespace Picaso
