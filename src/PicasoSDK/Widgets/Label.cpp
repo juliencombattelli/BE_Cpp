@@ -3,7 +3,7 @@
 namespace Picaso
 {
 
-Label::Label(Serial_Commander& lcd,std::string text, Color foreground_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size, Alignment_H h_alignment, Alignment_V v_alignment) :
+Label::Label(Serial_Commander& lcd,std::string text, Color foreground_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size, Alignment_H h_alignment, Alignment_V v_alignment, bool auto_update) :
 	Widget(lcd)
 {
     m_lcd = lcd;
@@ -18,12 +18,13 @@ Label::Label(Serial_Commander& lcd,std::string text, Color foreground_color, uin
     m_background_color = Color::BLACK;
     m_font_size = font_size;
     m_text = text;
+    m_auto_update = auto_update;
 
     update_attributes();
     write_text();
 }
 
-Label::Label(Serial_Commander& lcd) : Widget(lcd)
+Label::Label(Serial_Commander& lcd, bool auto_update) : Widget(lcd)
 {
     m_alignment.h = Alignment_H::h_left;
     m_alignment.v = Alignment_V::v_top;
@@ -34,6 +35,7 @@ Label::Label(Serial_Commander& lcd) : Widget(lcd)
     m_foreground_color = Color::WHITE;
     m_background_color = Color::BLACK;
     m_font_size = 1;
+    m_auto_update = auto_update;
 }
 
 Label::~Label()
@@ -168,55 +170,64 @@ void Label::change_color(Color foreground_color, Color background_color)
 {
     m_foreground_color = foreground_color;
     m_background_color = background_color;
-    update_attributes();
-    write_text();
+    if(m_auto_update)
+    {
+		update_attributes();
+		write_text();
+    }
 }
 
 void Label::change_size(uint16_t width, uint16_t height)
 {
 	m_boundingBox.size.width = width;
 	m_boundingBox.size.height = height;
-    update_attributes();
-    write_text();
+	if(m_auto_update)
+	{
+		update_attributes();
+		write_text();
+	}
 }
 
 void Label::change_origin(uint16_t x_origin, uint16_t y_origin)
 {
 	m_boundingBox.origin.x = x_origin;
 	m_boundingBox.origin.y = y_origin;
-    update_attributes();
-    write_text();
+	if(m_auto_update)
+	{
+		update_attributes();
+		write_text();
+	}
 }
 
 void Label::change_alignment(Alignment_H h_alignment, Alignment_V v_alignment)
 {
     m_alignment.h = h_alignment;
     m_alignment.v = v_alignment;
-    update_attributes();
-    write_text();
+    if(m_auto_update)
+    {
+		update_attributes();
+		write_text();
+    }
 }
 
 void Label::change_font_size(int font_size)
 {
     m_font_size = font_size;
-    update_attributes();
-    write_text();
+    if(m_auto_update)
+    {
+		update_attributes();
+		write_text();
+    }
 }
 
 void Label::change_text(std::string text)
 {
     m_text = text;
-    update_attributes();
-    write_text();
-}
-
-void Label::change_text2(std::string text)
-{
-    m_text = text;
-    char buffer[4];
-    text.copy(buffer,3, 0);
-    m_lcd.gfx_move_origin(96, 34);
-    m_lcd.txt_put_str((uint8_t*)buffer);
+    if(m_auto_update)
+    {
+		update_attributes();
+		write_text();
+    }
 }
 
 void Label::new_label(std::string text, Color foreground_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size, Alignment_H h_alignment, Alignment_V v_alignment)
