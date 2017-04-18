@@ -67,7 +67,7 @@ void Label::write_text()
     uint8_t car_index = 0;
     uint16_t size_text = m_text.size();
     std::string text_cpy;
-    char buffer[100];
+    std::string buffer;
     text_cpy = m_text;
 
     uint16_t y_location = 0, x_location = 0;
@@ -132,12 +132,11 @@ void Label::write_text()
                 	x_location = ((m_boundingBox.size.width - nb_car_per_sector[i]*m_lcd.txt_char_width('0'))/2) + m_boundingBox.origin.x;
                 	break;
             }
-            text_cpy.copy(buffer,nb_car_per_sector[i], car_index);
-            buffer[nb_car_per_sector[i]] = 0;
+            buffer = text_cpy.substr(car_index, nb_car_per_sector[i]);
             car_index += nb_car_per_sector[i];
 
             m_lcd.gfx_move_origin(x_location, y_location);
-            m_lcd.txt_put_str((uint8_t*)buffer);
+            m_lcd.txt_put_str(buffer);
 
             y_location += m_lcd.txt_char_height('0');
         }
