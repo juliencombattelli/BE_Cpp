@@ -8,6 +8,7 @@
 
 #include "mraa.hpp"
 #include "PicasoSDK/Gui/Color.h"
+#include <string>
 
 namespace Picaso
 {
@@ -26,7 +27,7 @@ public :
 
 	uint8_t txt_put_char(uint8_t caractere);
 
-	uint8_t txt_put_str(const uint8_t* str);
+	uint8_t txt_put_str(const std::string& str);
 
 	uint16_t txt_char_width(uint8_t car);
 

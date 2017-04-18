@@ -37,11 +37,6 @@ void Serial_Commander::clear_rx_buffer()
 
 void Serial_Commander::write_commande(const uint8_t* cmd, uint16_t size)
 {
-	/*for(uint8_t i = 0; i < size; i++)
-	{
-		//while (!m_serial.);
-		m_serial.write(static_cats<const uint8_t*>(&cmd[i]),1);
-	}*/
 	m_serial.write((const char*)(cmd), size);
 }
 
@@ -49,16 +44,13 @@ void Serial_Commander::read_commande(uint8_t* cmd, uint16_t size)
 {
 	uint32_t cpt = 0;
     clear_rx_buffer();
-    //m_serial.flush();
     for(uint8_t i = 0; i < size; i++)
 	{
 		cpt = 0;
         while (!m_serial.dataAvailable() && cpt < 500000)
-        {
-          cpt ++;
-        }
+        	cpt ++;
         if(cpt < 490000)
-            m_serial.read((char*)&cmd[i], 1);//m_serial.gets((char*)&cmd[i],1);
+            m_serial.read((char*)&cmd[i], 1);
 	}
 }
 
@@ -152,16 +144,16 @@ uint8_t Serial_Commander::txt_put_char(uint8_t caractere)
 		return 1;
 }
 
-uint8_t Serial_Commander::txt_put_str(const uint8_t* str)
+uint8_t Serial_Commander::txt_put_str(const std::string& str)
 {
-	uint16_t size = strlen((const char*)str);
+	uint16_t size = str.size();
 	uint8_t cmd[3];
 	cmd[0] = 0x00;
 	cmd[1] = 0x18;
 	cmd[2] = 0x00;
 
 	write_commande(cmd, 2);
-	write_commande((uint8_t*)str, size);
+	write_commande((uint8_t*)str.c_str(), size);
 	write_commande(&(cmd[2]), 1);
 	read_commande(cmd, 3);
 	if(cmd[0] == 0x06)
