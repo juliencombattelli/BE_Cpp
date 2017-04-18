@@ -43,19 +43,19 @@ public :
 
     void create_button(std::string text, Color color1, Color color2, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size);
 
-    std::string get_label() const {return m_label.m_text;}
+    std::string get_label() const {return m_label.get_text();}
 
 private :
 
     Label m_label;
 
-    Color m_color1;
-    Color m_color2;
+    static const int border_width = 2;
+
+    Color m_border_color;
+    Color m_fill_color;
     uint16_t x_release;
     uint16_t y_release;
 	uint16_t touch;
-
-    void round_angle(Color color);
 
     virtual void touch_event_handler(Sender&, const Event&);
 
