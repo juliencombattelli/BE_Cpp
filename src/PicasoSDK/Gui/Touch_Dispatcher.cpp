@@ -1,6 +1,19 @@
-#include "touch_dispatcher.h"
+//============================================================================
+// Name        : Touch_Dispatcher.cpp
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 19 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a class responsible of touch event notification to widgets
+//============================================================================
+
+#include "PicasoSDK/Gui/Touch_Dispatcher.h"
 #include "PicasoSDK/Gui/Rect.h"
 #include "PicasoSDK/Core/Events.h"
+#include "PicasoSDK/LcdDriver/Serial_Commander.h"
+#include "PicasoSDK/Widgets/Widget.h"
 
 namespace Picaso
 {
@@ -46,11 +59,6 @@ void Touch_Dispatcher::touch_periodic_task(Serial_Commander& lcd)
 void Touch_Dispatcher::register_widget(Widget& widget)
 {
     add_receiver(widget);
-}
-    
-void Touch_Dispatcher::clear_components()
-{
-    m_listening_components.clear();
 }
 
 } // namespace Picaso
