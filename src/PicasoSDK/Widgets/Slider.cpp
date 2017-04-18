@@ -11,84 +11,26 @@ Slider::Slider(Serial_Commander& lcd,
 		uint16_t origin_x,
 		uint16_t origin_y,
 		uint16_t width,
-		uint16_t height) :
+		uint16_t height,
+		bool auto_update) :
 	Widget(lcd)
 {
-	add_event_handler<Touch_Screen_Event>(&Slider::touch_event_handler, this);
+	m_auto_update = auto_update;
+	create_slider(border_color, fill_color, button_color, origin_x, origin_y, width, height);
 
-    m_boundingBox.origin.x = origin_x;
-    m_boundingBox.origin.y = origin_y;
-
-    m_boundingBox.size.height = height;
-    m_boundingBox.size.width = width;
-
-    m_border_color = border_color;
-    m_fill_color = fill_color;
-    m_button_color = button_color;
-
-    m_size_pressed.width = 6;
-    m_size_pressed.height = height - 4;
-    m_size_standard.width = 12;
-    m_size_standard.height = height;
-
-    touch = 0;
-    m_per_cent = 0.5;
-
-    set_slider();
+    show_slider();
 }
 
-Slider::Slider(Serial_Commander& lcd) :
+Slider::Slider(Serial_Commander& lcd, bool auto_update) :
 		Widget(lcd)
 {
-	add_event_handler<Touch_Screen_Event>(&Slider::touch_event_handler, this);
-
-    m_boundingBox.origin.x = 0;
-    m_boundingBox.origin.y = 0;
-
-    m_boundingBox.size.height = 20;
-    m_boundingBox.size.width = 20;
-
-    m_border_color = Color::ORANGE;
-    m_fill_color = Color::BLACK;
-    m_button_color = Color::GRAY;
-
-    m_size_pressed.width = 6;
-    m_size_pressed.height = m_boundingBox.size.height - 4;
-    m_size_standard.width = 12;
-    m_size_standard.height = m_boundingBox.size.height;
-
-    touch = 0;
-    m_per_cent = 0.5;
+	m_auto_update = auto_update;
+	create_slider(Color::ORANGE, Color::BLACK, Color::GRAY, 0, 0, 20, 20);
 }
 
 Slider::~Slider()
 {
 
-}
-
-void Slider::round_angle(Color color)
-{
-    /*uint16_t pixel_color;
-
-    pixel_color = m_lcd->gfx_read_pixel(rect.origin.x-1, rect.origin.y-1);
-    m_lcd->gfx_draw_pixel(rect.origin.x, rect.origin.y, pixel_color);
-    m_lcd->gfx_draw_pixel(rect.origin.x+1, rect.origin.y, pixel_color);
-    m_lcd->gfx_draw_pixel(rect.origin.x, rect.origin.y+1, pixel_color);
-
-    pixel_color = m_lcd->gfx_read_pixel(rect.origin.x + rect.size.width +1, rect.origin.y-1);
-    m_lcd->gfx_draw_pixel(rect.origin.x + rect.size.width, rect.origin.y, pixel_color);
-    m_lcd->gfx_draw_pixel(rect.origin.x + rect.size.width - 1, rect.origin.y, pixel_color);
-    m_lcd->gfx_draw_pixel(rect.origin.x + rect.size.width , rect.origin.y+1, pixel_color);
-
-    pixel_color = m_lcd->gfx_read_pixel(rect.origin.x-1, rect.origin.y + rect.size.height + 1);
-    m_lcd->gfx_draw_pixel(rect.origin.x, rect.origin.y + rect.size.height, pixel_color);
-    m_lcd->gfx_draw_pixel(rect.origin.x+1, rect.origin.y + rect.size.height, pixel_color);
-    m_lcd->gfx_draw_pixel(rect.origin.x, rect.origin.y + rect.size.height - 1, pixel_color);
-
-    pixel_color = m_lcd->gfx_read_pixel(rect.origin.x + rect.size.width +1, rect.origin.y + rect.size.height + 1);
-    m_lcd->gfx_draw_pixel(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height, pixel_color);
-    m_lcd->gfx_draw_pixel(rect.origin.x + rect.size.width - 1, rect.origin.y +rect.size.height, pixel_color);
-    m_lcd->gfx_draw_pixel(rect.origin.x + rect.size.width, rect.origin.y + rect.size.height - 1, pixel_color);*/
 }
 
 void Slider::touch_event_handler(Sender& sender, const Event& event)
@@ -107,19 +49,17 @@ void Slider::touch_event_handler(Sender& sender, const Event& event)
 						m_boundingBox.origin.x + m_boundingBox.size.width,
 						m_boundingBox.origin.y + m_boundingBox.size.height,
 						m_border_color);
-                round_angle(m_border_color);
                 update_button();
-                //m_delegate->did_move_slider(this, m_per_cent);
                 raise(Slider_Moved(m_per_cent));
-                touch = 1;
+                is_touch = true;
             }
             break;
 
         case Touch_Event::touch_ended :
-			if(touch == 1)
+			if(is_touch == true)
 			{
-				set_slider();
-				touch=0;
+				show_slider();
+				is_touch=false;
 			}
 			break;
 
@@ -128,7 +68,6 @@ void Slider::touch_event_handler(Sender& sender, const Event& event)
             {
                 m_per_cent = (float)(touch_event.point.x - m_boundingBox.origin.x) / (float)(m_boundingBox.size.width - 4);
                 update_button();
-                //m_delegate->did_move_slider(this, m_per_cent);
                 raise(Slider_Moved(m_per_cent));
             }
             break;
@@ -138,7 +77,7 @@ void Slider::touch_event_handler(Sender& sender, const Event& event)
     }
 }
 
-void Slider::set_slider()
+void Slider::show_slider()
 {
     m_lcd.gfx_draw_filled_rectangle(
     		m_boundingBox.origin.x,
@@ -148,13 +87,11 @@ void Slider::set_slider()
 			m_border_color);
 
     m_lcd.gfx_draw_filled_rectangle(
-    		m_boundingBox.origin.x + 2,
-			m_boundingBox.origin.y + 2,
-			m_boundingBox.origin.x + m_boundingBox.size.width - 2,
-			m_boundingBox.origin.y + m_boundingBox.size.height - 2,
+    		m_boundingBox.origin.x + border_width,
+			m_boundingBox.origin.y + border_width,
+			m_boundingBox.origin.x + m_boundingBox.size.width - border_width,
+			m_boundingBox.origin.y + m_boundingBox.size.height - border_width,
 			m_fill_color);
-
-    round_angle(m_border_color);
 
     if(m_boundingBox.size.width*m_per_cent - m_size_standard.width/2 < 2)
         m_lcd.gfx_draw_filled_rectangle(
@@ -215,21 +152,24 @@ void Slider::change_color(Color border_color, Color fill_color)
 {
     m_border_color = border_color;
     m_fill_color = fill_color;
-    set_slider();
+    if(m_auto_update)
+    	show_slider();
 }
 
 void Slider::change_size(uint16_t width, uint16_t height)
 {
 	m_boundingBox.size.height = height;
 	m_boundingBox.size.width = width;
-    set_slider();
+	if(m_auto_update)
+		show_slider();
 }
 
 void Slider::change_origin(uint16_t x_origin, uint16_t y_origin)
 {
 	m_boundingBox.origin.x = x_origin;
 	m_boundingBox.origin.y = y_origin;
-    set_slider();
+	if(m_auto_update)
+		show_slider();
 }
 
 void Slider::create_slider(Color border_color, Color fill_color, Color button_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height)
@@ -242,10 +182,17 @@ void Slider::create_slider(Color border_color, Color fill_color, Color button_co
 
     m_border_color = border_color;
     m_fill_color = fill_color;
+    m_button_color = button_color;
 
-    touch = 0;
+    m_size_pressed.width = 6;
+	m_size_pressed.height = height - 4;
+	m_size_standard.width = 12;
+	m_size_standard.height = height;
 
-    set_slider();
+    is_touch = false;
+	m_per_cent = 0.5;
+
+	add_event_handler<Touch_Screen_Event>(&Slider::touch_event_handler, this);
 }
 
 } // namespace Picaso

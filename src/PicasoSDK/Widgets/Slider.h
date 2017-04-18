@@ -27,13 +27,14 @@ public :
 			uint16_t origin_x = 0,
 			uint16_t origin_y = 0,
 			uint16_t width = 20,
-			uint16_t height = 20);
+			uint16_t height = 20,
+			bool auto_update = true);
 
-    Slider(Serial_Commander& lcd);
+    Slider(Serial_Commander& lcd, bool auto_update = true);
 
 	~Slider();
 
-    void set_slider();
+    void show_slider();
 
     void change_color(Color border_color, Color fill_color);
 
@@ -49,17 +50,18 @@ public :
 
 private :
 
-    void round_angle(Color color);
+    static const int border_width = 2;
 
     void update_button();
 
     Color m_border_color;
     Color m_fill_color;
     Color m_button_color;
-    uint16_t touch;
+    bool is_touch;
     float m_per_cent;
     Size m_size_standard;
     Size m_size_pressed;
+    bool m_auto_update;
 };
 
 } // namespace Picaso
