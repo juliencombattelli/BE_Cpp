@@ -53,8 +53,6 @@ private :
 
     Color m_border_color;
     Color m_fill_color;
-    uint16_t x_release;
-    uint16_t y_release;
 	uint16_t touch;
 
     virtual void touch_event_handler(Sender&, const Event&);

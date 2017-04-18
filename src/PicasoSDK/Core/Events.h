@@ -23,10 +23,8 @@ enum class Touch_Event
 
 struct Touch_Screen_Event : public Event
 {
-	Touch_Screen_Event(Point touch_point, Touch_Event touch_state) : point(touch_point), state(touch_state)
-	{
-
-	}
+	Touch_Screen_Event(Point touch_point, Touch_Event touch_state) :
+		point(touch_point), state(touch_state) {}
 
 	Point point;
 	Touch_Event state;
@@ -35,6 +33,14 @@ struct Touch_Screen_Event : public Event
 struct Button_Pressed : public Event
 {
 
+};
+
+struct Slider_Moved : public Event
+{
+	Slider_Moved(float current_per_cent) :
+		m_current_per_cent(current_per_cent) {}
+
+	float m_current_per_cent;
 };
 
 } // namespace Picaso

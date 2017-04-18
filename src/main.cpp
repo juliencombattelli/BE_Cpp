@@ -28,13 +28,13 @@ public:
 		add_event_handler<Picaso::Button_Pressed>(&WindowManager::button_pressed_handler, this);
 	}
 
-	template<class TWidget, typename...Args>
+	/*template<class TWidget, typename...Args>
 	TWidget& createWidget(Args&&... args)
 	{
 		TWidget& widget = *new TWidget(m_lcd, std::forward<Args>(args)...);
 		m_touch_dispatcher.register_widget(widget);
 		return widget;
-	}
+	}*/
 
 	void run()
 	{
@@ -43,7 +43,6 @@ public:
 		m_touch_dispatcher.register_widget(button);
 		while(1)
 		{
-			//std::cout << "a" << std::endl;
 			m_touch_dispatcher.touch_periodic_task(m_lcd);
 		}
 	}
