@@ -173,13 +173,13 @@ void Button::change_font_size(int font_size)
     set_button();
 }
 
-void Button::change_text(std::string text)
+void Button::change_text(const std::string& text)
 {
     m_label.change_text(text);
     set_button();
 }
 
-void Button::create_button(std::string text, Color border_color, Color fill_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size)
+void Button::create_button(const std::string& text, Color border_color, Color fill_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size)
 {
     m_label.change_alignment(Alignment_H::h_center, Alignment_V::v_center);
 

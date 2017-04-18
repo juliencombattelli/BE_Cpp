@@ -31,7 +31,7 @@ public :
 
     void inverse_button();
 
-    void change_color(Color color1, Color color2);
+    void change_color(Color border_color, Color fill_color);
 
     void change_size(uint16_t width, uint16_t height);
 
@@ -39,9 +39,9 @@ public :
 
     void change_font_size(int font_size);
 
-    void change_text(std::string text);
+    void change_text(const std::string& text);
 
-    void create_button(std::string text, Color color1, Color color2, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size);
+    void create_button(const std::string& text, Color border_color, Color fill_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size);
 
     std::string get_label() const {return m_label.get_text();}
 
