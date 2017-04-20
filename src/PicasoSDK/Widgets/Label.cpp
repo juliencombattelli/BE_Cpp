@@ -10,6 +10,8 @@
 //============================================================================
 
 #include "PicasoSDK/Widgets/Label.h"
+#include <iostream>
+#include <algorithm>
 
 namespace Picaso
 {
@@ -45,90 +47,79 @@ void Label::update_attributes()
     m_lcd.txt_background_color(m_background_color);
 }
 
+inline std::string trim(const std::string &s)
+{
+	auto wsfront = std::find_if_not(s.begin(),s.end(),[](int c){return std::isspace(c);});
+	auto wsback = std::find_if_not(s.rbegin(),s.rend(),[](int c){return std::isspace(c);}).base();
+	return (wsback <= wsfront ? std::string() : std::string(wsfront,wsback));
+}
+
 void Label::write_text()
 {
-    uint8_t sector = 0;
-    uint8_t u = m_lcd.txt_char_width('0');
-    uint8_t nb_car_max = m_boundingBox.size.width/u;
-    uint8_t nb_car_per_sector[100];
-    uint8_t car_index_total = 0;
-    uint8_t car_index = 0;
-    uint16_t size_text = m_text.size();
-    std::string text_cpy;
-    std::string buffer;
-    text_cpy = m_text;
+    uint8_t character_width = m_lcd.txt_char_width('0');
+    uint8_t character_height = m_lcd.txt_char_height('0');
+    uint8_t max_char_per_line = m_boundingBox.size.width/character_width;
 
-    uint16_t y_location = 0, x_location = 0;
-    if(nb_car_max != 0)
-    {
-        while(car_index_total < size_text)
-        {
-            car_index += nb_car_max;
+    if(max_char_per_line == 0)
+    	return;
 
-            if(car_index < size_text)
-            {
-                while((text_cpy[car_index] != ' ') && (car_index_total != car_index))
-                    car_index --;
+	size_t space_pos = 0;
+	size_t index = 0;
+	Point text_location{m_boundingBox.origin.x, m_boundingBox.origin.x};
+	std::string tmp{m_text};
+	std::vector<std::string> str_vect;
 
-                if(car_index_total == car_index)
-                {
-                    car_index += nb_car_max;
-                }
-                else
-                {
-                    text_cpy.erase(car_index,1);
-                    size_text = text_cpy.size();
-                }
-            }
-            else
-                car_index = size_text;
+	while(space_pos != std::string::npos)
+	{
+		space_pos = tmp.find(" ", index);
+		if(space_pos > max_char_per_line)
+		{
+			str_vect.emplace_back(trim(tmp.substr(0, index)));
+			tmp.erase(0, index);
+		}
+		else
+			index = space_pos + 1;
+	}
 
-            nb_car_per_sector[sector] = car_index - car_index_total;
-            sector ++;
-            car_index_total = car_index;
-        }
+	size_t line_count = str_vect.size();
 
-        switch(m_alignment.v)
-        {
-            case Alignment_V::TOP:
-                y_location = m_boundingBox.origin.y;
-                break;
+	switch(m_alignment.v)
+	{
+		case Alignment_V::TOP:
+			text_location.y = m_boundingBox.origin.y;
+			break;
 
-            case Alignment_V::BOTTOM:
-                y_location = (m_boundingBox.origin.y + m_boundingBox.size.height) - sector*m_lcd.txt_char_height('0');
-                break;
+		case Alignment_V::BOTTOM:
+			text_location.y = (m_boundingBox.origin.y + m_boundingBox.size.height) - line_count*character_height;
+			break;
 
-            case Alignment_V::CENTER:
-                y_location = ((m_boundingBox.size.height - sector*m_lcd.txt_char_height('0')) / 2) + m_boundingBox.origin.y;
-                break;
-        }
+		case Alignment_V::CENTER:
+			text_location.y = ((m_boundingBox.size.height - line_count*character_height) / 2) + m_boundingBox.origin.y;
+			break;
+	}
 
-        car_index = 0;
-        for(uint8_t i = 0; i < sector; i++)
-        {
-             switch(m_alignment.h)
-            {
-                case Alignment_H::LEFT:
-                    x_location = m_boundingBox.origin.x;
-                    break;
+	for(unsigned i = 0; i < line_count; i++)
+	{
+		switch(m_alignment.h)
+		{
+			case Alignment_H::LEFT:
+				text_location.x = m_boundingBox.origin.x;
+				break;
 
-                case Alignment_H::RIGHT:
-                	x_location = (m_boundingBox.origin.x + m_boundingBox.size.width) - nb_car_per_sector[i]*m_lcd.txt_char_width('0');
-                	break;
+			case Alignment_H::RIGHT:
+				text_location.x = (m_boundingBox.origin.x + m_boundingBox.size.width) - str_vect[i].size()*character_height;
+				break;
 
-                case Alignment_H::CENTER:
-                	x_location = ((m_boundingBox.size.width - nb_car_per_sector[i]*m_lcd.txt_char_width('0'))/2) + m_boundingBox.origin.x;
-                	break;
-            }
-            buffer = text_cpy.substr(car_index, nb_car_per_sector[i]);
-            car_index += nb_car_per_sector[i];
+			case Alignment_H::CENTER:
+				text_location.x = ((m_boundingBox.size.width - str_vect[i].size()*character_width)/2) + m_boundingBox.origin.x;
+				break;
+		}
 
-            m_lcd.gfx_move_origin(x_location, y_location);
-            m_lcd.txt_put_str(buffer);
+		m_lcd.gfx_move_origin(text_location.x, text_location.y);
+		m_lcd.txt_put_str(str_vect[i]);
 
-            y_location += m_lcd.txt_char_height('0');
-        }
-    }
+		text_location.y += character_height;
+	}
 }
 
 void Label::show()
