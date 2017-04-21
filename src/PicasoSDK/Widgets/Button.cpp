@@ -40,7 +40,7 @@ void Button::touch_event_handler(Sender& sender, const Event& event)
     switch(touch_event.state)
     {
         case Touch_Event::touch_began:
-            if(Rect::is_inside(touch_event.point, m_boundingBox))
+            if(m_boundingBox.contains(touch_event.point))
             {
                 inverse_button();
                 m_is_touch = true;
@@ -51,7 +51,7 @@ void Button::touch_event_handler(Sender& sender, const Event& event)
             if(m_is_touch == true)
             {
                 show();
-                if(Rect::is_inside(touch_event.point, m_boundingBox))
+                if(m_boundingBox.contains(touch_event.point))
                 {
                 	raise(Button_Pressed());
                 }

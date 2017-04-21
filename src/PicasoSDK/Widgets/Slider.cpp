@@ -52,7 +52,7 @@ void Slider::touch_event_handler(Sender& sender, const Event& event)
     switch(touch_event.state)
     {
         case Touch_Event::touch_began:
-            if(Rect::is_inside(touch_event.point, m_boundingBox))
+            if(m_boundingBox.contains(touch_event.point))
             {
                 m_per_cent = (float)(touch_event.point.x - m_boundingBox.origin.x) / (float)(m_boundingBox.size.width);
 
@@ -77,7 +77,7 @@ void Slider::touch_event_handler(Sender& sender, const Event& event)
 			break;
 
         case Touch_Event::touch_moved:
-            if(Rect::is_inside(touch_event.point, m_boundingBox))
+            if(m_boundingBox.contains(touch_event.point))
             {
                 m_per_cent = (float)(touch_event.point.x - m_boundingBox.origin.x) / (float)(m_boundingBox.size.width - 4);
                 update_button();
