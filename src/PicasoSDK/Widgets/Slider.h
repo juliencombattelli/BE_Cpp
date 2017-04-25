@@ -27,9 +27,9 @@ public:
 
 	virtual ~Slider();
 
-    virtual void show() override;
+    virtual void show() = 0;
 
-    void create(Color border_color = Color::ORANGE, Color fill_color = Color::BLACK, Color button_color = Color::GRAY, uint16_t x_origin = 0, uint16_t y_origin = 0, uint16_t width = 20, uint16_t height = 20);
+    virtual void create(Color border_color = Color::ORANGE, Color fill_color = Color::BLACK, Color button_color = Color::GRAY, uint16_t x_origin = 0, uint16_t y_origin = 0, uint16_t width = 20, uint16_t height = 20) = 0;
 
     void change_color(Color border_color, Color fill_color);
     void change_size(uint16_t width, uint16_t height);
@@ -37,11 +37,10 @@ public:
 
     float get_per_cent() const { return m_per_cent; }
 
-private:
+protected:
+    virtual void touch_event_handler(Sender&, const Event&) = 0;
 
-    virtual void touch_event_handler(Sender&, const Event&) override;
-
-    void update_button();
+    virtual void update_button() = 0;
 
     static const int border_width = 2;
 
