@@ -22,7 +22,7 @@ public:
 	virtual void show() = 0;
 	virtual void update() {}
 
-private:
+protected:
 	Serial_Commander& m_lcd;
 };
 
