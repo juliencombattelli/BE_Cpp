@@ -13,6 +13,7 @@
 #define PICASO_EVENTS_H_
 
 #include "PicasoSDK/Core/Event.h"
+#include "PicasoSDK/Gui/Rect.h"
 
 namespace Picaso
 {

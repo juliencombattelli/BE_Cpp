@@ -10,11 +10,12 @@
 
 #include "PicasoSDK/Gui/Window_Base.h"
 #include "PicasoSDK/Gui/touch_dispatcher.h"
+#include "PicasoSDK/Core/Events.h"
 
 namespace Picaso
 {
 
-class Touchable_Window : public Window_Base
+class Touchable_Window : public Window_Base, public Receiver
 {
 public:
 	Touchable_Window(Serial_Commander& lcd) : Window_Base(lcd) {}
