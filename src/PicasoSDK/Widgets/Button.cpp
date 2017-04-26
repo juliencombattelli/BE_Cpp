@@ -20,7 +20,7 @@ Button::Button(Serial_Commander& lcd, const std::string& text, Color border_colo
 {
     create(text, border_color, fill_color, x_origin, y_origin, width, height, font_size);
 
-    show();
+    //show();
 }
 
 Button::Button(Serial_Commander& lcd) :

@@ -68,6 +68,7 @@ void Label::write_text()
 	Point text_location{m_boundingBox.origin.x, m_boundingBox.origin.x};
 	std::string tmp{m_text};
 	std::vector<std::string> str_vect;
+	tmp += " ";
 
 	while(space_pos != std::string::npos)
 	{
