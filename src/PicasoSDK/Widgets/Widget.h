@@ -23,15 +23,19 @@ class Widget : public Receiver, public Sender
 {
 public:
 
-	Widget(Serial_Commander& lcd) : m_lcd(lcd){}
+	Widget(Serial_Commander& lcd) : m_lcd(lcd){ m_id = id_count; id_count++;}
 	virtual ~Widget() = default;
 
 	virtual void show() = 0;
+	unsigned int get_id() const {return m_id;}
+
+	static unsigned int id_count;
 
 protected:
 
 	Serial_Commander& m_lcd;
 	Rect m_boundingBox;
+	unsigned int m_id;
 };
 
 } // namespace Picaso
