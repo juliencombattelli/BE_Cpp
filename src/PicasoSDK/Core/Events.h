@@ -40,6 +40,11 @@ struct Button_Pressed : public Event
 
 };
 
+struct Button_Pressing : public Event
+{
+
+};
+
 struct Slider_Moved : public Event
 {
 	Slider_Moved(float current_per_cent) :

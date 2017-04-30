@@ -44,8 +44,16 @@ void Button::touch_event_handler(Sender& sender, const Event& event)
             {
                 inverse_button();
                 m_is_touch = true;
+                raise(Button_Pressing());
             }
             break;
+
+        case Touch_Event::touch_moved:
+        	if(m_is_touch == true)
+        	{
+        		raise(Button_Pressing());
+        	}
+        	break;
 
         case Touch_Event::touch_ended :
             if(m_is_touch == true)
