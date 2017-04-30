@@ -15,7 +15,7 @@
 namespace Picaso
 {
 
-class Touchable_Window : public Window_Base, public Receiver
+class Touchable_Window : public Window_Base, public Receiver, public Sender
 {
 public:
 	Touchable_Window(Serial_Commander& lcd) : Window_Base(lcd) {}
