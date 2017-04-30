@@ -40,20 +40,6 @@ struct Button_Pressed : public Event
 
 };
 
-struct Navigation_Button_Pressed : public Button_Pressed
-{
-	enum Type
-	{
-		Previous = -1,
-		Next = 1,
-		Return = 0,
-	};
-
-	Navigation_Button_Pressed(Type t) : type(t) {}
-
-	Type type;
-};
-
 struct Button_Pressing : public Event
 {
 

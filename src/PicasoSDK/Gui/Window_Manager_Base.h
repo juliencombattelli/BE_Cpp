@@ -11,6 +11,7 @@
 #include "PicasoSDK/Core/Event.h"
 #include <vector>
 #include <memory>
+#include <limits>
 
 namespace Picaso
 {
@@ -19,16 +20,18 @@ class Window_Manager_Base : public Receiver
 {
 public:
 
-	Window_Manager_Base();
+	Window_Manager_Base(int uart, int reset_pin, uint32_t baud_rate = 9600) : m_activeWindow(NoActive) {}
 
+	virtual ~Window_Manager_Base() = default;
 
+	virtual void update() = 0;
 
 protected:
 
-	Picaso::Touch_Dispatcher m_touch_dispatcher;
 	Picaso::Serial_Commander m_lcd;
 	std::vector<std::unique_ptr<Window_Base>> m_windows;
 	size_t m_activeWindow;
+	static const size_t NoActive = std::numeric_limits<decltype(NoActive)>::max;
 };
 
 }  // namespace Picaso
