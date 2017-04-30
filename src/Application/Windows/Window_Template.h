@@ -16,7 +16,7 @@ class Window_Template : public Picaso::Touchable_Window
 {
 public:
 	Window_Template(Picaso::Serial_Commander& lcd);
-	virtual ~Window_Template();
+	virtual ~Window_Template() = default;
 
 	void show();
 

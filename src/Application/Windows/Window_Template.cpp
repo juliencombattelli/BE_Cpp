@@ -24,11 +24,6 @@ button_prev(m_lcd, "<", Picaso::Color::WHITE, Picaso::Color::RED, 10, 20, 40, 40
 	add_event_handler<Picaso::Button_Pressed>(&Window_Template::button_pressed_handler, this);
 }
 
-Window_Template::~Window_Template()
-{
-
-}
-
 void Window_Template::show()
 {
 	m_lcd.gfx_clear_screen();
@@ -40,7 +35,8 @@ void Window_Template::show()
 
 void Window_Template::button_pressed_handler(Sender& s, const Event& event)
 {
-	unsigned int id = ((Picaso::Widget&)s).get_id();
+	Picaso::Widget& widget = static_cast<Picaso::Widget&>(s);
+	unsigned int id = widget.get_id();
 
 	if(id == button_return.get_id())
 		button_return_pressed();
@@ -49,7 +45,7 @@ void Window_Template::button_pressed_handler(Sender& s, const Event& event)
 	else if(id == button_prev.get_id())
 		button_prev_pressed();
 	else
-		custom_button_pressed_handler(((Picaso::Widget&)s).get_id());
+		custom_button_pressed_handler(id);
 }
 
 void Window_Template::button_return_pressed()
