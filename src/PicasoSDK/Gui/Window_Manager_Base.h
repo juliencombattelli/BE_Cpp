@@ -9,6 +9,8 @@
 #define PICASOSDK_GUI_WINDOW_MANAGER_BASE_H_
 
 #include "PicasoSDK/Core/Event.h"
+#include "PicasoSDK/LcdDriver/Serial_Commander.h"
+#include "PicasoSDK/Gui/Window_Base.h"
 #include <vector>
 #include <memory>
 #include <limits>
@@ -28,7 +30,7 @@ public:
 
 protected:
 
-	Picaso::Serial_Commander m_lcd;
+	Serial_Commander m_lcd;
 	std::vector<std::unique_ptr<Window_Base>> m_windows;
 	size_t m_activeWindow;
 	static const size_t NoActive = std::numeric_limits<decltype(NoActive)>::max;
