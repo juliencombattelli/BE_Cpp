@@ -6,6 +6,8 @@
  */
 
 #include "Application/Windows/Main_Window.h"
+#include "Application/Events.h"
+#include <iostream>
 
 Main_Window::Main_Window(Picaso::Serial_Commander& lcd) : Touchable_Window(lcd),
 button_moving(m_lcd, "Moving Window", Picaso::Color::RED, Picaso::Color::BLACK, 10, 70, 450/2, 90),
@@ -46,6 +48,8 @@ void Main_Window::show()
 
 void Main_Window::button_pressed_handler(Sender& s, const Event& event)
 {
+	std::cout << "touche" << std::endl;
+
 	unsigned int id = ((Picaso::Widget&)s).get_id();
 
 	if(id == button_moving.get_id())
@@ -60,20 +64,20 @@ void Main_Window::button_pressed_handler(Sender& s, const Event& event)
 
 void Main_Window::button_moving_pressed()
 {
-
+	raise(Navigation_choise_Pressed(1));
 }
 
 void Main_Window::button_monitor_pressed()
 {
-
+	raise(Navigation_choise_Pressed(2));
 }
 
 void Main_Window::button_spreading_pressed()
 {
-
+	raise(Navigation_choise_Pressed(3));
 }
 
 void Main_Window::button_tilt_pressed()
 {
-
+	raise(Navigation_choise_Pressed(4));
 }
