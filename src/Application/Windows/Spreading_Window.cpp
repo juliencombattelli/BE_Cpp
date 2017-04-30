@@ -39,9 +39,9 @@ void Spreading_Window::slider_moved_handler(Sender& s, const Event& event)
 	unsigned int id = ((Picaso::Widget&)s).get_id();
 
 	if(id==m_heigth.get_id())
-		heigth_change(((Picaso::Slider&)s).get_per_cent());
+		heigth_change(((Picaso::SliderV&)s).get_per_cent());
 	else if(id==m_spread.get_id())
-		spread_change(((Picaso::Slider&)s).get_per_cent());
+		spread_change(((Picaso::SliderH&)s).get_per_cent());
 }
 
 void Spreading_Window::heigth_change(float value)
