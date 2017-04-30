@@ -19,6 +19,7 @@ public:
 private:
 	void custom_show();
 	void custom_button_pressed_handler(unsigned int button_id);
+	void button_pressing_handler(Sender& s, const Event& event);
 
 	void button_front_pressed();
 	void button_back_pressed();

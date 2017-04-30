@@ -23,6 +23,8 @@ m_right(lcd, "right", Picaso::Color::GRAY, Picaso::Color::WHITESMOKE, 480/2 - 50
 	m_touch_dispatcher.register_widget(m_back);
 	m_touch_dispatcher.register_widget(m_left);
 	m_touch_dispatcher.register_widget(m_right);
+
+	add_event_handler<Picaso::Button_Pressing>(&Moving_Window::button_pressing_handler, this);
 }
 
 Moving_Window::~Moving_Window()
@@ -41,6 +43,13 @@ void Moving_Window::custom_show()
 
 void Moving_Window::custom_button_pressed_handler(unsigned int button_id)
 {
+
+}
+
+void Moving_Window::button_pressing_handler(Sender& s, const Event& event)
+{
+	unsigned int button_id = ((Picaso::Widget&)s).get_id();
+
 	if(button_id == m_front.get_id())
 		button_front_pressed();
 	else if (button_id == m_back.get_id())
