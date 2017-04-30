@@ -69,7 +69,7 @@ void Main_Window::button_moving_pressed()
 
 void Main_Window::button_monitor_pressed()
 {
-	raise(Navigation_choise_Pressed(2));
+	raise(Navigation_choise_Pressed(4));
 }
 
 void Main_Window::button_spreading_pressed()
@@ -79,5 +79,5 @@ void Main_Window::button_spreading_pressed()
 
 void Main_Window::button_tilt_pressed()
 {
-	raise(Navigation_choise_Pressed(4));
+	raise(Navigation_choise_Pressed(2));
 }
