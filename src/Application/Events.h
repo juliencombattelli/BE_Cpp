@@ -24,4 +24,11 @@ struct Navigation_Button_Pressed : public Picaso::Button_Pressed
 	Type type;
 };
 
+struct Navigation_choise_Pressed : public Picaso::Button_Pressed
+{
+	Navigation_choise_Pressed(size_t i) : index(i) {}
+
+	size_t index;
+};
+
 #endif /* APPLICATION_EVENTS_H_ */
