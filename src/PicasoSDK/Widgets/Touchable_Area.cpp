@@ -11,7 +11,7 @@
 namespace Picaso
 {
 
-Touchable_Area::Touchable_Area(Serial_Commander& lcd, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height) :
+Touchable_Area::Touchable_Area(Serial_Commander& lcd, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, uint16_t rel_x_origin, uint16_t rel_y_origin) :
 		Touchable_Widget(lcd)
 {
 	m_boundingBox.origin.x = x_origin;
@@ -19,6 +19,9 @@ Touchable_Area::Touchable_Area(Serial_Commander& lcd, uint16_t x_origin, uint16_
 
 	m_boundingBox.size.height = height;
 	m_boundingBox.size.width = width;
+
+	m_rel_x_origin = rel_x_origin;
+	m_rel_y_origin = rel_y_origin;
 
 	add_event_handler<Touch_Screen_Event>(&Touchable_Area::touch_event_handler, this);
 }
@@ -54,7 +57,7 @@ void Touchable_Area::touch_event_handler(Sender& sender, const Event& event)
             if(m_boundingBox.contains(touch_event.point))
             {
                 m_is_touch = true;
-                raise(Area_Touched(touch_event.point.x - m_boundingBox.origin.x, touch_event.point.y - m_boundingBox.origin.y));
+                raise(Area_Touched(touch_event.point.x - m_boundingBox.origin.x - m_rel_x_origin, touch_event.point.y - m_boundingBox.origin.y - m_rel_y_origin));
             }
             break;
 
@@ -62,7 +65,7 @@ void Touchable_Area::touch_event_handler(Sender& sender, const Event& event)
         	if(m_is_touch == true)
         	{
         		if(m_boundingBox.contains(touch_event.point))
-        			raise(Area_Touched(touch_event.point.x - m_boundingBox.origin.x, touch_event.point.y - m_boundingBox.origin.y));
+        			raise(Area_Touched(touch_event.point.x - m_boundingBox.origin.x - m_rel_x_origin, touch_event.point.y - m_boundingBox.origin.y - m_rel_y_origin));
         	}
         	break;
 
@@ -70,7 +73,7 @@ void Touchable_Area::touch_event_handler(Sender& sender, const Event& event)
             if(m_is_touch == true)
             {
                 if(m_boundingBox.contains(touch_event.point))
-                	raise(Area_Touched(touch_event.point.x - m_boundingBox.origin.x, touch_event.point.y - m_boundingBox.origin.y));
+                	raise(Area_Touched(touch_event.point.x - m_boundingBox.origin.x - m_rel_x_origin, touch_event.point.y - m_boundingBox.origin.y - m_rel_y_origin));
                 m_is_touch = false;
             }
             break;

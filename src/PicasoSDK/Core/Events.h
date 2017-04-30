@@ -55,11 +55,11 @@ struct Slider_Moved : public Event
 
 struct Area_Touched : public Event
 {
-	Area_Touched(unsigned int x, unsigned int y) :
+	Area_Touched(int x, int y) :
 		m_x(x), m_y(y) {}
 
-	unsigned int m_x;
-	unsigned int m_y;
+	int m_x;
+	int m_y;
 };
 
 } // namespace Picaso
