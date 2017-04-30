@@ -6,6 +6,7 @@
  */
 
 #include "Application/Windows/Window_Template.h"
+#include "Application/Events.h"
 #include "iostream"
 
 Window_Template::Window_Template(Picaso::Serial_Commander& lcd) : Touchable_Window(lcd),
@@ -50,16 +51,16 @@ void Window_Template::button_pressed_handler(Sender& s, const Event& event)
 
 void Window_Template::button_return_pressed()
 {
-	std::cout << "return" << std::endl;
+	raise(Navigation_Button_Pressed(Navigation_Button_Pressed::Return));
 }
 
 void Window_Template::button_next_pressed()
 {
-	std::cout << "next" << std::endl;
+	raise(Navigation_Button_Pressed(Navigation_Button_Pressed::Next));
 }
 
 void Window_Template::button_prev_pressed()
 {
-	std::cout << "prev" << std::endl;
+	raise(Navigation_Button_Pressed(Navigation_Button_Pressed::Previous));
 }
 
