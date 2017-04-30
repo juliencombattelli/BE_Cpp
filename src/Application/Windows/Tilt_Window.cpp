@@ -6,6 +6,7 @@
  */
 
 #include "Application/Windows/Tilt_Window.h"
+#include "Application/Events.h"
 #include <iostream>
 
 Tilt_Window::Tilt_Window(Picaso::Serial_Commander& lcd) : Window_Template(lcd),
@@ -39,6 +40,6 @@ void Tilt_Window::area_touched_handler(Sender& s, const Event& event)
 
 	if(id == m_area.get_id())
 	{
-		std::cout << ((Picaso::Area_Touched&)event).m_x << " " << ((Picaso::Area_Touched&)event).m_y << std::endl;
- 	}
+		raise(Tilt_change(((Picaso::Area_Touched&)event).m_x, ((Picaso::Area_Touched&)event).m_y));
+	}
 }

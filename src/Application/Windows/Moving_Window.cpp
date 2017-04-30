@@ -6,6 +6,7 @@
  */
 
 #include "Application/Windows/Moving_Window.h"
+#include "Application/Events.h"
 #include "iostream"
 
 Moving_Window::Moving_Window(Picaso::Serial_Commander& lcd) : Window_Template(lcd),
@@ -62,20 +63,20 @@ void Moving_Window::button_pressing_handler(Sender& s, const Event& event)
 
 void Moving_Window::button_front_pressed()
 {
-	std::cout << "front" << std::endl;
+	raise(Moving_Button_Pressed(Moving_Button_Pressed::front));
 }
 void Moving_Window::button_back_pressed()
 {
-	std::cout << "back" << std::endl;
+	raise(Moving_Button_Pressed(Moving_Button_Pressed::back));
 }
 
 void Moving_Window::button_left_pressed()
 {
-	std::cout << "left" << std::endl;
+	raise(Moving_Button_Pressed(Moving_Button_Pressed::left));
 }
 
 void Moving_Window::button_right_pressed()
 {
-	std::cout << "right" << std::endl;
+	raise(Moving_Button_Pressed(Moving_Button_Pressed::right));
 }
 

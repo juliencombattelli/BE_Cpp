@@ -6,6 +6,7 @@
  */
 
 #include "Application/Windows/Spreading_Window.h"
+#include "Application/Events.h"
 #include "iostream"
 
 Spreading_Window::Spreading_Window(Picaso::Serial_Commander& lcd) : Window_Template(lcd),
@@ -46,10 +47,10 @@ void Spreading_Window::slider_moved_handler(Sender& s, const Event& event)
 
 void Spreading_Window::heigth_change(float value)
 {
-	std::cout << "heigth : " << value << std::endl;
+	raise(spreading_change(m_spread.get_per_cent(), value));
 }
 
 void Spreading_Window::spread_change(float value)
 {
-	std::cout << "spread : " << value << std::endl;
+	raise(spreading_change(value, m_heigth.get_per_cent()));
 }
