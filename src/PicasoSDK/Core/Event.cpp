@@ -34,12 +34,13 @@ void Sender::raise(Event const& event)
 	{
 		if(receiver->on_notify(*this, event) == Notify_Action::Un_Register)
 		{
-			deadReceivers.push_back(receiver);
+			// TODO : check if receiver is listening other event (aka it has other entries in m_handler)
+			//deadReceivers.push_back(receiver);
 		}
 	}
 
 	auto newEnd = std::end(m_receivers);
-	for (Receiver* dead : deadReceivers)
+	for(Receiver* dead : deadReceivers)
 	{
 		newEnd = std::remove(std::begin(m_receivers), newEnd, dead);
 	}
