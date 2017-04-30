@@ -24,6 +24,7 @@ public:
 
 private:
 	void navigation_handler(Sender& s, const Event& event);
+	void navigation_choise_handler(Sender& s, const Event& event);
 };
 
 
