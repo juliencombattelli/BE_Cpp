@@ -74,7 +74,7 @@ void Window_Manager::navigation_handler(Sender& s, const Event& event)
 	else if(e.type == Navigation_Button_Pressed::Next)
 	{
 		m_activeWindow++;
-		if(m_activeWindow>=4)
+		if(m_activeWindow>4)
 			m_activeWindow = 1;
 		m_windows[m_activeWindow]->show();
 	}
