@@ -26,16 +26,13 @@ Window_Manager::Window_Manager() : Window_Manager_Base(0, 13,9600)
 	m_windows.emplace_back(std::make_unique<Spreading_Window>(m_lcd));
 	m_windows.emplace_back(std::make_unique<Process_Monitor>(m_lcd));
 
-	m_windows[0]->add_receiver(*this);
-	m_windows[1]->add_receiver(*this);
-	m_windows[2]->add_receiver(*this);
-	m_windows[3]->add_receiver(*this);
-	m_windows[4]->add_receiver(*this);
+	for(auto& window : m_windows)
+		window->add_receiver(*this);
 
 	add_event_handler<Navigation_Button_Pressed>(&Window_Manager::navigation_handler, this);
 	add_event_handler<Navigation_choise_Pressed>(&Window_Manager::navigation_choise_handler, this);
 
-	m_activeWindow = 1;
+	m_activeWindow = 0;
 	m_windows[m_activeWindow]->show();
 }
 
@@ -46,16 +43,12 @@ Window_Manager::~Window_Manager()
 
 void Window_Manager::Register_windows(Application& application)
 {
-	m_windows[0]->add_receiver(application);
-	m_windows[1]->add_receiver(application);
-	m_windows[2]->add_receiver(application);
-	m_windows[3]->add_receiver(application);
-	m_windows[4]->add_receiver(application);
+	for(auto& window : m_windows)
+		window->add_receiver(application);
 }
 
 void Window_Manager::update()
 {
-	std::cout << m_activeWindow << std::endl;
 	if(m_activeWindow < m_windows.size())
 	{
 		m_windows[m_activeWindow]->update();
