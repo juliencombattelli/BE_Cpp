@@ -53,6 +53,15 @@ struct Slider_Moved : public Event
 	float m_current_per_cent;
 };
 
+struct Area_Touched : public Event
+{
+	Area_Touched(unsigned int x, unsigned int y) :
+		m_x(x), m_y(y) {}
+
+	unsigned int m_x;
+	unsigned int m_y;
+};
+
 } // namespace Picaso
 
 #endif // PICASO_EVENTS_H_
