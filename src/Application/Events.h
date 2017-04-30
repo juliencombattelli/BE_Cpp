@@ -34,24 +34,18 @@ struct Navigation_choise_Pressed : public Picaso::Button_Pressed
 
 struct Moving_Button_Pressed : public Picaso::Button_Pressed
 {
-	enum X
+	enum direction
 	{
 		front = 1,
 		back = -1,
+		right = 2,
+		left = -2,
 		none = 0,
 	};
 
-	enum Y
-	{
-		right = 1,
-		left = -1,
-		Return = 0,
-	};
+	Moving_Button_Pressed(direction dir) : m_dir(dir) {}
 
-	Moving_Button_Pressed(X x, Y y) : m_x(x), m_y(y) {}
-
-	X m_x;
-	Y m_y;
+	direction m_dir;
 };
 
 struct Tilt_change : public Event
@@ -60,6 +54,14 @@ struct Tilt_change : public Event
 
 	float m_x;
 	float m_y;
+};
+
+struct spreading_change : public Event
+{
+	spreading_change(float spread, float heigth) : m_spread(spread), m_heigth(heigth) {}
+
+	float m_spread;
+	float m_heigth;
 };
 
 #endif /* APPLICATION_EVENTS_H_ */
