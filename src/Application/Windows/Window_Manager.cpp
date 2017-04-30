@@ -14,6 +14,7 @@
 #include "Application/Windows/Main_Window.h"
 
 #include "Application/Application.h"
+#include "Application/Events.h"
 
 Window_Manager::Window_Manager() : Window_Manager_Base(0, 13,9600)
 {
@@ -28,6 +29,8 @@ Window_Manager::Window_Manager() : Window_Manager_Base(0, 13,9600)
 	m_windows[2]->add_receiver(*this);
 	m_windows[3]->add_receiver(*this);
 	m_windows[4]->add_receiver(*this);
+
+	add_event_handler<Navigation_Button_Pressed>(&Window_Manager::navigation_handler, this);
 
 	m_windows[0]->show();
 	m_activeWindow = 0;
@@ -47,4 +50,32 @@ void Window_Manager::Register_windows(Application& application)
 	m_windows[4]->add_receiver(application);
 }
 
+void Window_Manager::update()
+{
+	m_windows[m_activeWindow]->update();
+}
 
+void Window_Manager::navigation_handler(Sender& s, const Event& event)
+{
+	Navigation_Button_Pressed& e = (Navigation_Button_Pressed&)event;
+
+	if(e.type == Navigation_Button_Pressed::Return)
+	{
+		m_activeWindow = 0;
+		m_windows[m_activeWindow]->show();
+	}
+	else if(e.type == Navigation_Button_Pressed::Previous)
+	{
+		m_activeWindow--;
+		if(!m_activeWindow)
+			m_activeWindow = 4;
+		m_windows[m_activeWindow]->show();
+	}
+	else if(e.type == Navigation_Button_Pressed::Next)
+	{
+		m_activeWindow++;
+		if(!m_activeWindow>=4)
+			m_activeWindow = 1;
+		m_windows[m_activeWindow]->show();
+	}
+}

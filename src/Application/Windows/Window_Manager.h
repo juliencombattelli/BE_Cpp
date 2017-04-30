@@ -20,7 +20,10 @@ public:
 
 	void Register_windows(Application& application);
 
+	void update();
+
 private:
+	void navigation_handler(Sender& s, const Event& event);
 };
 
 
