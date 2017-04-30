@@ -19,6 +19,8 @@ Touchable_Area::Touchable_Area(Serial_Commander& lcd, uint16_t x_origin, uint16_
 
 	m_boundingBox.size.height = height;
 	m_boundingBox.size.width = width;
+
+	add_event_handler<Touch_Screen_Event>(&Touchable_Area::touch_event_handler, this);
 }
 
 Touchable_Area::~Touchable_Area()
