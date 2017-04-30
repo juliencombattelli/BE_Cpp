@@ -40,6 +40,6 @@ void Tilt_Window::area_touched_handler(Sender& s, const Event& event)
 
 	if(id == m_area.get_id())
 	{
-		raise(Tilt_change(((Picaso::Area_Touched&)event).m_x, ((Picaso::Area_Touched&)event).m_y));
+		raise(Tilt_Change(((Picaso::Area_Touched&)event).m_x, ((Picaso::Area_Touched&)event).m_y));
 	}
 }

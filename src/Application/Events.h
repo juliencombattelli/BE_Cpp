@@ -48,17 +48,17 @@ struct Moving_Button_Pressed : public Picaso::Button_Pressed
 	direction m_dir;
 };
 
-struct Tilt_change : public Event
+struct Tilt_Change : public Event
 {
-	Tilt_change(float x, float y) : m_x(x), m_y(y) {}
+	Tilt_Change(float x, float y) : m_x(x), m_y(y) {}
 
 	float m_x;
 	float m_y;
 };
 
-struct spreading_change : public Event
+struct Spreading_Change : public Event
 {
-	spreading_change(float spread, float heigth) : m_spread(spread), m_heigth(heigth) {}
+	Spreading_Change(float spread, float heigth) : m_spread(spread), m_heigth(heigth) {}
 
 	float m_spread;
 	float m_heigth;

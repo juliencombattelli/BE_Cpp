@@ -47,10 +47,10 @@ void Spreading_Window::slider_moved_handler(Sender& s, const Event& event)
 
 void Spreading_Window::heigth_change(float value)
 {
-	raise(spreading_change(m_spread.get_per_cent(), value));
+	raise(Spreading_Change(m_spread.get_per_cent(), value));
 }
 
 void Spreading_Window::spread_change(float value)
 {
-	raise(spreading_change(value, m_heigth.get_per_cent()));
+	raise(Spreading_Change(value, m_heigth.get_per_cent()));
 }
