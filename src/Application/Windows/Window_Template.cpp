@@ -9,7 +9,7 @@
 #include "iostream"
 
 Window_Template::Window_Template(Picaso::Serial_Commander& lcd) : Touchable_Window(lcd),
-button_return(lcd, "return", Picaso::Color::RED, Picaso::Color::BLACK, 340, 20, 80, 40),
+button_return(m_lcd, "return", Picaso::Color::RED, Picaso::Color::BLACK, 340, 20, 80, 40),
 button_next(m_lcd, ">", Picaso::Color::WHITE, Picaso::Color::RED, 430, 20, 40, 40, 1),
 button_prev(m_lcd, "<", Picaso::Color::WHITE, Picaso::Color::RED, 10, 20, 40, 40, 1)
 {
