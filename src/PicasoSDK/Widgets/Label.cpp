@@ -23,7 +23,8 @@ Label::Label(Serial_Commander& lcd, const std::string& text, Color foreground_co
 
     create(text, foreground_color, x_origin, y_origin, width, height, font_size, h_alignment, v_alignment);
 
-    show();
+    if(auto_update)
+    	show();
 }
 
 Label::Label(Serial_Commander& lcd, bool auto_update) : Widget(lcd)
@@ -137,7 +138,7 @@ void Label::show_delimitation()
 			m_boundingBox.origin.x + m_boundingBox.size.width,
 			m_boundingBox.origin.y + m_boundingBox.size.height,
 			m_background_color);
-    write_text();
+    	write_text();
 }
 
 void Label::change_color(Color foreground_color, Color background_color)
@@ -218,7 +219,8 @@ void Label::create(const std::string& text, Color foreground_color, uint16_t x_o
     m_text = text;
 
     update_attributes();
-    write_text();
+    if(m_auto_update)
+    	write_text();
 }
 
 } // namespace Picaso
