@@ -9,11 +9,12 @@
 #define PICASOSDK_GUI_WINDOW_BASE_H_
 
 #include "PicasoSDK/LcdDriver/Serial_Commander.h"
+#include "PicasoSDK/Core/Events.h"
 
 namespace Picaso
 {
 
-class Window_Base
+class Window_Base : public Sender
 {
 public:
 	Window_Base(Serial_Commander& lcd) : m_lcd(lcd) {}
