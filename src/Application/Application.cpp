@@ -53,21 +53,42 @@ void Application::stop()
 void Application::send_direction_command(Sender& s, const Event& e)
 {
 	bt::Packet packet;
-	packet.append(std::vector<char>{0x01, 0x02, 0x03, 0x04});
+	switch(((Moving_Button_Pressed)e).m_dir)
+	{
+	case Moving_Button_Pressed::front : packet.append(std::vector<char>{0x01, 0x01}); break;
+	case Moving_Button_Pressed::back : packet.append(std::vector<char>{0x01, 0x02}); break;
+	case Moving_Button_Pressed::left : packet.append(std::vector<char>{0x01, 0x03}); break;
+	case Moving_Button_Pressed::right : packet.append(std::vector<char>{0x01, 0x04}); break;
+	default : packet.append(std::vector<char>{0x01, 0x00}); break;
+	}
 	m_socket.send(packet);
 }
 
 void Application::send_tilt_command(Sender& s, const Event& e)
 {
 	bt::Packet packet;
-	packet.append(std::vector<char>{0x01, 0x02, 0x03, 0x04});
+	int8_t pitch = ((Tilt_Change)e).m_x;
+	if(pitch > 100)
+		pitch = 100;
+	else if(pitch < -100)
+		pitch = -100;
+	int8_t roll = ((Tilt_Change)e).m_y;
+	if(roll > 100)
+		roll = 100;
+	else if(roll < -100)
+		roll = -100;
+	packet.append(std::vector<char>{0x02, pitch, roll});
 	m_socket.send(packet);
 }
 
 void Application::send_spreading_command(Sender& s, const Event& e)
 {
 	bt::Packet packet;
-	packet.append(std::vector<char>{0x01, 0x02, 0x03, 0x04});
+	uint8_t heigth = ((Spreading_Change)e).m_heigth;
+	heigth = heigth*255;
+	uint8_t spread = ((Spreading_Change)e).m_spread;
+	spread = spread*255;
+	packet.append(std::vector<char>{0x02, spread, heigth});
 	m_socket.send(packet);
 }
 
