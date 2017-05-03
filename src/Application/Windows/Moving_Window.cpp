@@ -44,7 +44,11 @@ void Moving_Window::custom_show()
 
 void Moving_Window::custom_button_pressed_handler(unsigned int button_id)
 {
-
+	if((button_id == m_front.get_id()) ||
+		(button_id == m_back.get_id()) ||
+		(button_id == m_left.get_id()) ||
+		(button_id == m_right.get_id()))
+		raise(Moving_Button_Pressed(Moving_Button_Pressed::none));
 }
 
 void Moving_Window::button_pressing_handler(Sender& s, const Event& event)
