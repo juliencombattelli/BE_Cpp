@@ -31,6 +31,7 @@ private:
 
 	Window_Manager m_window_manager;
 	Timer m_timer;
+
 	bt::RfcommSocket m_socket;
 
 	bool m_is_running;

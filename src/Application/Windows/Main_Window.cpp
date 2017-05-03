@@ -48,8 +48,6 @@ void Main_Window::show()
 
 void Main_Window::button_pressed_handler(Sender& s, const Event& event)
 {
-	std::cout << "touche" << std::endl;
-
 	unsigned int id = ((Picaso::Widget&)s).get_id();
 
 	if(id == button_moving.get_id())

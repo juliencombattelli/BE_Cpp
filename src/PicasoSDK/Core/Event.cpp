@@ -39,12 +39,12 @@ void Sender::raise(Event const& event)
 		}
 	}
 
-	auto newEnd = std::end(m_receivers);
+	/*auto newEnd = std::end(m_receivers);
 	for(Receiver* dead : deadReceivers)
 	{
 		newEnd = std::remove(std::begin(m_receivers), newEnd, dead);
 	}
-	m_receivers.erase(newEnd, std::end(m_receivers));
+	m_receivers.erase(newEnd, std::end(m_receivers));*/
 }
 
 Notify_Action Receiver::on_notify(Sender& sender, Event const& event)

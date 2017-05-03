@@ -18,7 +18,7 @@ public:
 	Window_Manager();
 	~Window_Manager();
 
-	void Register_windows(Application& application);
+	void register_windows(Application& application);
 
 	void update();
 

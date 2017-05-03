@@ -15,6 +15,8 @@ Application::Application() : m_is_running(true)
 	add_event_handler<Moving_Button_Pressed>(&Application::send_direction_command, this);
 	add_event_handler<Tilt_Change>(&Application::send_tilt_command, this);
 	add_event_handler<Spreading_Change>(&Application::send_spreading_command, this);
+
+	m_window_manager.register_windows(*this);
 }
 
 Application::~Application()
@@ -24,8 +26,13 @@ Application::~Application()
 
 void Application::run(int period_ms)
 {
-	m_socket.connect("B8:27:EB:7C:3D:9D", 1);
-	std::cout << "Connected on B8:27:EB:7C:3D:9D" << std::endl;
+	std::cout << "Try to connect to B8:27:EB:7C:3D:9D" << std::endl;
+	bt::Status status = m_socket.connect("B8:27:EB:7C:3D:9D", 1);
+
+	if(status == bt::Status::Done)
+		std::cout << "Connected to B8:27:EB:7C:3D:9D" << std::endl;
+	else
+		std::cout << "Failed to connect to B8:27:EB:7C:3D:9D" << std::endl;
 
 	while(m_is_running)
 	{
@@ -52,43 +59,94 @@ void Application::stop()
 
 void Application::send_direction_command(Sender& s, const Event& e)
 {
-	bt::Packet packet;
-	switch(((Moving_Button_Pressed)e).m_dir)
+	const Moving_Button_Pressed& event = (const Moving_Button_Pressed&)e;
+
+	std::vector<int8_t> data;
+
+	switch(event.dir)
 	{
-	case Moving_Button_Pressed::front : packet.append(std::vector<char>{0x01, 0x01}); break;
-	case Moving_Button_Pressed::back : packet.append(std::vector<char>{0x01, 0x02}); break;
-	case Moving_Button_Pressed::left : packet.append(std::vector<char>{0x01, 0x03}); break;
-	case Moving_Button_Pressed::right : packet.append(std::vector<char>{0x01, 0x04}); break;
-	default : packet.append(std::vector<char>{0x01, 0x00}); break;
+	case Moving_Button_Pressed::front :
+		data.push_back(0x01);
+		data.push_back(0x01);
+		break;
+	case Moving_Button_Pressed::back :
+		data.push_back(0x01);
+		data.push_back(0x02);
+		break;
+	case Moving_Button_Pressed::left :
+		data.push_back(0x01);
+		data.push_back(0x03);
+		break;
+	case Moving_Button_Pressed::right :
+		data.push_back(0x01);
+		data.push_back(0x04);
+		break;
+	default :
+		data.push_back(0x01);
+		data.push_back(0x00);
+		break;
 	}
-	m_socket.send(packet);
+
+	std::cout << "Sending direction command ..." << std::endl;
+
+	size_t sent = 0;
+	bt::Status status = m_socket.send(data.data(), data.size(), sent);
+
+	if(status == bt::Status::Done)
+		std::cout << "Direction command sent" << std::endl;
+	else
+		std::cout << "Failed to send direction command; code = " << bt::StatusStr[static_cast<int>(status)] << std::endl;
 }
 
 void Application::send_tilt_command(Sender& s, const Event& e)
 {
-	bt::Packet packet;
-	int8_t pitch = ((Tilt_Change)e).m_x;
+	const Tilt_Change& event = (const Tilt_Change&)e;
+
+	int8_t pitch = event.x;
 	if(pitch > 100)
 		pitch = 100;
 	else if(pitch < -100)
 		pitch = -100;
-	int8_t roll = ((Tilt_Change)e).m_y;
+
+	int8_t roll = event.y;
 	if(roll > 100)
 		roll = 100;
 	else if(roll < -100)
 		roll = -100;
-	packet.append(std::vector<char>{0x02, pitch, roll});
-	m_socket.send(packet);
+
+	std::vector<int8_t> data{0x02, pitch, roll};
+
+	std::cout << "Sending tilt command ..." << std::endl;
+
+	size_t sent = 0;
+	bt::Status status = m_socket.send(data.data(), data.size(), sent);
+
+	if(status == bt::Status::Done)
+		std::cout << "Tilt command sent" << std::endl;
+	else
+		std::cout << "Failed to send tilt command; code = " << bt::StatusStr[static_cast<int>(status)] << std::endl;
 }
 
 void Application::send_spreading_command(Sender& s, const Event& e)
 {
-	bt::Packet packet;
-	uint8_t heigth = ((Spreading_Change)e).m_heigth;
+	const Spreading_Change& event = (const Spreading_Change&)e;
+
+	uint8_t heigth = event.heigth;
 	heigth = heigth*255;
-	uint8_t spread = ((Spreading_Change)e).m_spread;
+
+	uint8_t spread = event.spread;
 	spread = spread*255;
-	packet.append(std::vector<char>{0x02, spread, heigth});
-	m_socket.send(packet);
+
+	std::vector<uint8_t> data{0x02, spread, heigth};
+
+	std::cout << "Sending spreading command ..." << std::endl;
+
+	size_t sent = 0;
+	bt::Status status = m_socket.send(data.data(), data.size(), sent);
+
+	if(status == bt::Status::Done)
+		std::cout << "Spreading command sent" << std::endl;
+	else
+		std::cout << "Failed to send spreading command; code = " << bt::StatusStr[static_cast<int>(status)] << std::endl;
 }
 

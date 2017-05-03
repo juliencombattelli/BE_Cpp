@@ -32,6 +32,9 @@ Window_Manager::Window_Manager() : Window_Manager_Base(0, 13,9600)
 	add_event_handler<Navigation_Button_Pressed>(&Window_Manager::navigation_handler, this);
 	add_event_handler<Navigation_choise_Pressed>(&Window_Manager::navigation_choise_handler, this);
 
+	m_lcd.touch_set(0);
+	m_lcd.touch_detect_region(0,0,480,480);
+
 	m_activeWindow = 0;
 	m_windows[m_activeWindow]->show();
 }
@@ -41,7 +44,7 @@ Window_Manager::~Window_Manager()
 
 }
 
-void Window_Manager::Register_windows(Application& application)
+void Window_Manager::register_windows(Application& application)
 {
 	for(auto& window : m_windows)
 		window->add_receiver(application);

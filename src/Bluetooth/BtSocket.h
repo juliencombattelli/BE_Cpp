@@ -27,7 +27,17 @@ enum class Status
 	NotReady,     ///< The socket is not ready to send / receive data yet
 	Partial,      ///< The socket sent a part of the data
 	Disconnected, ///< The socket has been disconnected
-	Error         ///< An unexpected error happened
+	Error,        ///< An unexpected error happened
+
+	Count		  ///< Status count, keep last
+};
+
+constexpr char StatusStr[static_cast<size_t>(Status::Count)][15] = {
+		"Done",
+		"Not ready",
+		"Partial",
+		"Disconnected",
+		"Error"
 };
 
 enum class Type
