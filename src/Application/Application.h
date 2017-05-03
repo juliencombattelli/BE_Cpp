@@ -11,12 +11,14 @@
 #include "PicasoSDK/Core/Events.h"
 #include "Application/Windows/Window_Manager.h"
 #include "Application/Timer.h"
+#include "Bluetooth/RfcommSocket.h"
 
 class Application : public Receiver
 {
 public:
 
 	Application();
+	~Application();
 
 	void run(int period_ms);
 	void stop();
@@ -29,6 +31,7 @@ private:
 
 	Window_Manager m_window_manager;
 	Timer m_timer;
+	bt::RfcommSocket m_socket;
 
 	bool m_is_running;
 };
