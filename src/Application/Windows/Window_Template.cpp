@@ -11,12 +11,12 @@
 
 #include "Application/Windows/Window_Template.h"
 #include "Application/Events.h"
-#include "iostream"
 
-Window_Template::Window_Template(Picaso::Serial_Commander& lcd) : Touchable_Window(lcd),
-button_return(m_lcd, "return", Picaso::Color::RED, Picaso::Color::BLACK, 340, 20, 80, 40),
-button_next(m_lcd, ">", Picaso::Color::WHITE, Picaso::Color::RED, 430, 20, 40, 40, 1),
-button_prev(m_lcd, "<", Picaso::Color::WHITE, Picaso::Color::RED, 10, 20, 40, 40, 1)
+Window_Template::Window_Template(Picaso::Serial_Commander& lcd) :
+	Touchable_Window(lcd),
+	button_return(m_lcd, "return", Picaso::Color::RED, Picaso::Color::BLACK, 340, 20, 80, 40),
+	button_next(m_lcd, ">", Picaso::Color::WHITE, Picaso::Color::RED, 430, 20, 40, 40, 1),
+	button_prev(m_lcd, "<", Picaso::Color::WHITE, Picaso::Color::RED, 10, 20, 40, 40, 1)
 {
 	m_lcd = lcd;
 	button_return.add_receiver(*this);
@@ -38,9 +38,9 @@ void Window_Template::show()
 	custom_show();
 }
 
-void Window_Template::button_pressed_handler(Sender& s, const Event& event)
+void Window_Template::button_pressed_handler(Sender& s, const Event& e)
 {
-	Picaso::Widget& widget = static_cast<Picaso::Widget&>(s);
+	Picaso::Widget& widget = static_cast<decltype(widget)>(s);
 	unsigned int id = widget.get_id();
 
 	if(id == button_return.get_id())

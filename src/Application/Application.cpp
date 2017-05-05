@@ -14,7 +14,8 @@
 #include <exception>
 #include <initializer_list>
 
-Application::Application() : m_is_running(true)
+Application::Application() :
+	m_is_running(true)
 {
 	add_event_handler<Moving_Button_Pressed>(&Application::send_direction_command, this);
 	add_event_handler<Tilt_Change>(&Application::send_tilt_command, this);
@@ -63,7 +64,7 @@ void Application::stop()
 
 void Application::send_direction_command(Sender& s, const Event& e)
 {
-	const Moving_Button_Pressed& event = (const Moving_Button_Pressed&)e;
+	const Moving_Button_Pressed& event = static_cast<decltype(event)>(e);
 
 	std::vector<int8_t> data;
 
@@ -104,7 +105,7 @@ void Application::send_direction_command(Sender& s, const Event& e)
 
 void Application::send_tilt_command(Sender& s, const Event& e)
 {
-	const Tilt_Change& event = (const Tilt_Change&)e;
+	const Tilt_Change& event = static_cast<decltype(event)>(e);
 
 	int8_t pitch = event.x;
 	if(pitch > 100)
@@ -133,7 +134,7 @@ void Application::send_tilt_command(Sender& s, const Event& e)
 
 void Application::send_spreading_command(Sender& s, const Event& e)
 {
-	const Spreading_Change& event = (const Spreading_Change&)e;
+	const Spreading_Change& event = static_cast<decltype(event)>(e);
 
 	uint8_t height = event.height;
 	height = height*255;

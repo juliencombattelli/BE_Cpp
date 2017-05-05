@@ -29,11 +29,6 @@ SliderH::SliderH(Serial_Commander& lcd, bool auto_update) : Slider(lcd, auto_upd
 	create(Color::ORANGE, Color::BLACK, Color::GRAY, 0, 0, 20, 20);
 }
 
-SliderH::~SliderH()
-{
-
-}
-
 void SliderH::show()
 {
     m_lcd.gfx_draw_filled_rectangle(

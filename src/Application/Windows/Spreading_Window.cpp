@@ -12,12 +12,12 @@
 
 #include "Application/Windows/Spreading_Window.h"
 #include "Application/Events.h"
-#include "iostream"
 
-Spreading_Window::Spreading_Window(Picaso::Serial_Commander& lcd) : Window_Template(lcd),
-m_title(lcd, "Spreading window", Picaso::Color::WHITE, 70, 20, 250, 40, 2, Picaso::Alignment_H::CENTER, Picaso::Alignment_V::CENTER, false),
-m_height(lcd, Picaso::Color::WHITE, Picaso::Color::GRAY, Picaso::Color::WHITESMOKE, 20, 80, 40, 270-80-20, false),
-m_spread(lcd, Picaso::Color::WHITE, Picaso::Color::GRAY, Picaso::Color::WHITESMOKE, 20 +40 +10, 80 + 270-80-20-40, 270, 40, false)
+Spreading_Window::Spreading_Window(Picaso::Serial_Commander& lcd) :
+	Window_Template(lcd),
+	m_title(lcd, "Spreading window", Picaso::Color::WHITE, 70, 20, 250, 40, 2, Picaso::Alignment_H::CENTER, Picaso::Alignment_V::CENTER, false),
+	m_height(lcd, Picaso::Color::WHITE, Picaso::Color::GRAY, Picaso::Color::WHITESMOKE, 20, 80, 40, 270-80-20, false),
+	m_spread(lcd, Picaso::Color::WHITE, Picaso::Color::GRAY, Picaso::Color::WHITESMOKE, 20 +40 +10, 80 + 270-80-20-40, 270, 40, false)
 {
 	m_touch_dispatcher.register_widget(m_height);
 	m_touch_dispatcher.register_widget(m_spread);
@@ -28,11 +28,6 @@ m_spread(lcd, Picaso::Color::WHITE, Picaso::Color::GRAY, Picaso::Color::WHITESMO
 	add_event_handler<Picaso::Slider_Moved>(&Spreading_Window::slider_moved_handler, this);
 }
 
-Spreading_Window::~Spreading_Window()
-{
-
-}
-
 void Spreading_Window::custom_show()
 {
 	m_title.show();
@@ -40,14 +35,15 @@ void Spreading_Window::custom_show()
 	m_spread.show();
 }
 
-void Spreading_Window::slider_moved_handler(Sender& s, const Event& event)
+void Spreading_Window::slider_moved_handler(Sender& s, const Event& e)
 {
-	unsigned int id = ((Picaso::Widget&)s).get_id();
+	Picaso::Slider& sender = static_cast<decltype(sender)>(s);
+	unsigned int id = sender.get_id();
 
 	if(id==m_height.get_id())
-		height_change(((Picaso::SliderV&)s).get_per_cent());
+		height_change(sender.get_per_cent());
 	else if(id==m_spread.get_id())
-		spread_change(((Picaso::SliderH&)s).get_per_cent());
+		spread_change(sender.get_per_cent());
 }
 
 void Spreading_Window::height_change(float value)

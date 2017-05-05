@@ -25,9 +25,7 @@ public:
     Slider(Serial_Commander& lcd, Color border_color, Color fill_color = Color::BLACK, Color button_color = Color::GRAY, uint16_t origin_x = 0, uint16_t origin_y = 0, uint16_t width = 20, uint16_t height = 20, bool auto_update = true);
     Slider(Serial_Commander& lcd, bool auto_update = true);
 
-	virtual ~Slider();
-
-    virtual void show() = 0;
+	virtual ~Slider() = default;
 
     virtual void create(Color border_color = Color::ORANGE, Color fill_color = Color::BLACK, Color button_color = Color::GRAY, uint16_t x_origin = 0, uint16_t y_origin = 0, uint16_t width = 20, uint16_t height = 20) = 0;
 
@@ -38,7 +36,6 @@ public:
     float get_per_cent() const { return m_per_cent; }
 
 protected:
-    virtual void touch_event_handler(Sender&, const Event&) = 0;
 
     virtual void update_button() = 0;
 

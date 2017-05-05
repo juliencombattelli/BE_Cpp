@@ -45,8 +45,6 @@ public :
     Label(Serial_Commander& p_lcd, const std::string& text, Color foreground_color = Color::WHITE, uint16_t x_origin = 0, uint16_t y_origin = 0, uint16_t width = 20, uint16_t height = 20, int font_size = 1, Alignment_H h_alignment = Alignment_H::LEFT, Alignment_V v_alignment = Alignment_V::TOP, bool auto_update = false);
     Label(Serial_Commander& p_lcd, bool auto_update = false);
 
-    ~Label();
-
     virtual void show() override;
 
     void create(const std::string& text, Color foreground_color = Color::WHITE, uint16_t x_origin = 0, uint16_t y_origin = 0, uint16_t width = 20, uint16_t height = 20, int font_size = 1, Alignment_H h_alignment = Alignment_H::LEFT, Alignment_V v_alignment = Alignment_V::TOP);

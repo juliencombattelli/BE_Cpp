@@ -19,10 +19,9 @@ class Process_Monitor : public Window_Template
 {
 public:
 	Process_Monitor(Picaso::Serial_Commander& lcd);
-	virtual ~Process_Monitor();
 
 private:
-	void custom_show();
+	virtual void custom_show() override;
 
 	Picaso::Label m_title;
 	Picaso::Label m_process;

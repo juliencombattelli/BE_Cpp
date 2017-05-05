@@ -21,17 +21,16 @@ class Main_Window : public Picaso::Touchable_Window
 {
 public:
 	Main_Window(Picaso::Serial_Commander& lcd);
-	virtual ~Main_Window();
 
-	void show();
+	virtual void show() override;
 
 private:
 	void button_pressed_handler(Sender& s, const Event& event);
 
-	Picaso::Button button_moving;
-	Picaso::Button button_monitor;
-	Picaso::Button button_spreading;
-	Picaso::Button button_tilt;
+	Picaso::Button m_button_moving;
+	Picaso::Button m_button_monitor;
+	Picaso::Button m_button_spreading;
+	Picaso::Button m_button_tilt;
 	Picaso::Label m_title;
 	Picaso::Label m_names;
 

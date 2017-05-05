@@ -35,11 +35,6 @@ Slider::Slider(Serial_Commander& lcd, bool auto_update) :
 	m_auto_update = auto_update;
 }
 
-Slider::~Slider()
-{
-
-}
-
 void Slider::change_color(Color border_color, Color fill_color)
 {
     m_border_color = border_color;

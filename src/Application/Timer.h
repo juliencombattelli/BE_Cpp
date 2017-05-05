@@ -13,7 +13,6 @@
 #define APPLICATION_TIMER_H_
 
 #include <chrono>
-#include <iostream>
 
 class Timer
 {

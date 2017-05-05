@@ -21,9 +21,8 @@
 #include "Application/Application.h"
 #include "Application/Events.h"
 
-#include <iostream>
-
-Window_Manager::Window_Manager() : Window_Manager_Base(0, 13,9600)
+Window_Manager::Window_Manager() :
+	Window_Manager_Base(0, 13,9600)
 {
 	m_windows.emplace_back(std::make_unique<Main_Window>(m_lcd));
 	m_windows.emplace_back(std::make_unique<Moving_Window>(m_lcd));
@@ -35,18 +34,13 @@ Window_Manager::Window_Manager() : Window_Manager_Base(0, 13,9600)
 		window->add_receiver(*this);
 
 	add_event_handler<Navigation_Button_Pressed>(&Window_Manager::navigation_handler, this);
-	add_event_handler<Navigation_choise_Pressed>(&Window_Manager::navigation_choise_handler, this);
+	add_event_handler<Navigation_Choise_Pressed>(&Window_Manager::navigation_choise_handler, this);
 
 	m_lcd.touch_set(0);
 	m_lcd.touch_detect_region(0,0,480,480);
 
 	m_activeWindow = 0;
 	m_windows[m_activeWindow]->show();
-}
-
-Window_Manager::~Window_Manager()
-{
-
 }
 
 void Window_Manager::register_windows(Application& application)
@@ -58,28 +52,26 @@ void Window_Manager::register_windows(Application& application)
 void Window_Manager::update()
 {
 	if(m_activeWindow < m_windows.size())
-	{
 		m_windows[m_activeWindow]->update();
-	}
 }
 
-void Window_Manager::navigation_handler(Sender& s, const Event& event)
+void Window_Manager::navigation_handler(Sender& s, const Event& e)
 {
-	Navigation_Button_Pressed& e = (Navigation_Button_Pressed&)event;
+	const Navigation_Button_Pressed& event = static_cast<decltype(event)>(e);
 
-	if(e.type == Navigation_Button_Pressed::Return)
+	if(event.type == Navigation_Button_Pressed::Return)
 	{
 		m_activeWindow = 0;
 		m_windows[m_activeWindow]->show();
 	}
-	else if(e.type == Navigation_Button_Pressed::Previous)
+	else if(event.type == Navigation_Button_Pressed::Previous)
 	{
 		m_activeWindow--;
 		if(!m_activeWindow)
 			m_activeWindow = 4;
 		m_windows[m_activeWindow]->show();
 	}
-	else if(e.type == Navigation_Button_Pressed::Next)
+	else if(event.type == Navigation_Button_Pressed::Next)
 	{
 		m_activeWindow++;
 		if(m_activeWindow>4)
@@ -88,10 +80,10 @@ void Window_Manager::navigation_handler(Sender& s, const Event& event)
 	}
 }
 
-void Window_Manager::navigation_choise_handler(Sender& s, const Event& event)
+void Window_Manager::navigation_choise_handler(Sender& s, const Event& e)
 {
-	Navigation_choise_Pressed& e = (Navigation_choise_Pressed&)event;
+	const Navigation_Choise_Pressed& event = static_cast<decltype(event)>(e);
 
-	m_activeWindow = e.index;
+	m_activeWindow = event.index;
 	m_windows[m_activeWindow]->show();
 }

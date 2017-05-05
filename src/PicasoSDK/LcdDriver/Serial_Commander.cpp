@@ -18,7 +18,7 @@ Serial_Commander::Serial_Commander(int uart, int reset_pin, uint32_t baud_rate) 
 {
 	m_serial.setBaudRate(baud_rate);
 	m_rst.write(0);
-	usleep(500000);
+	sleep(1);
     m_rst.write(1);
     sleep(4);
 	clear_rx_buffer();

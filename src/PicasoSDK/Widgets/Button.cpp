@@ -29,11 +29,6 @@ Button::Button(Serial_Commander& lcd) :
     create("", Color::ORANGE, Color::BLACK, 0, 0, 20, 20, 1);
 }
 
-Button::~Button()
-{
-
-}
-
 void Button::touch_event_handler(Sender& sender, const Event& event)
 {
 	const Touch_Screen_Event& touch_event = static_cast<decltype(touch_event)>(event);

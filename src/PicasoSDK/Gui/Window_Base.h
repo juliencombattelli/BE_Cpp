@@ -33,6 +33,4 @@ protected:
 
 } // namespace Picaso
 
-
-
 #endif /* PICASOSDK_GUI_WINDOW_BASE_H_ */

@@ -10,7 +10,6 @@
 //============================================================================
 
 #include "PicasoSDK/Widgets/Label.h"
-#include <iostream>
 #include <algorithm>
 
 namespace Picaso
@@ -32,11 +31,6 @@ Label::Label(Serial_Commander& lcd, bool auto_update) : Widget(lcd)
     m_auto_update = auto_update;
 
     create("", Color::WHITE, 0, 0, 20, 20, 1, Alignment_H::LEFT, Alignment_V::TOP);
-}
-
-Label::~Label()
-{
-
 }
 
 void Label::update_attributes()

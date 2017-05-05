@@ -21,7 +21,6 @@ class Window_Manager : public Picaso::Window_Manager_Base
 {
 public:
 	Window_Manager();
-	~Window_Manager();
 
 	void register_windows(Application& application);
 

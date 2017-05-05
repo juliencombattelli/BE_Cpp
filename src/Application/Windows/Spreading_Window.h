@@ -21,10 +21,9 @@ class Spreading_Window : public Window_Template
 {
 public:
 	Spreading_Window(Picaso::Serial_Commander& lcd);
-	virtual ~Spreading_Window();
 
 private:
-	void custom_show();
+	virtual void custom_show() override;
 
 	void slider_moved_handler(Sender& s, const Event& event);
 

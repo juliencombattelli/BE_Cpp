@@ -37,6 +37,7 @@ protected:
 	Serial_Commander m_lcd;
 	std::vector<std::unique_ptr<Window_Base>> m_windows;
 	size_t m_activeWindow;
+
 	static const size_t NoActive = std::numeric_limits<size_t>::max();
 };
 

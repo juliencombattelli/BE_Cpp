@@ -26,8 +26,6 @@ public:
 	Button(Serial_Commander& lcd, const std::string& text, Color color1 = Color::ORANGE, Color color2 = Color::BLACK, uint16_t x_origin = 0, uint16_t y_origin = 0, uint16_t width = 20, uint16_t height = 20, int font_size = 1);
 	Button(Serial_Commander& lcd);
 
-	virtual ~Button();
-
     virtual void show() override;
 
     void create(const std::string& text, Color border_color, Color fill_color, uint16_t x_origin, uint16_t y_origin, uint16_t width, uint16_t height, int font_size);

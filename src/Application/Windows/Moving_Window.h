@@ -18,11 +18,10 @@ class Moving_Window : public Window_Template
 {
 public:
 	Moving_Window(Picaso::Serial_Commander& lcd);
-	virtual ~Moving_Window();
 
 private:
-	void custom_show();
-	void custom_button_pressed_handler(unsigned int button_id);
+	virtual void custom_show() override;
+	virtual void custom_button_pressed_handler(unsigned int button_id) override;
 	void button_pressing_handler(Sender& s, const Event& event);
 
 	void button_front_pressed();

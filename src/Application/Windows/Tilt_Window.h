@@ -21,10 +21,9 @@ class Tilt_Window : public Window_Template
 {
 public:
 	Tilt_Window(Picaso::Serial_Commander& lcd);
-	virtual ~Tilt_Window();
 
 private:
-	void custom_show();
+	virtual void custom_show() override;
 	void area_touched_handler(Sender& s, const Event& event);
 
 	Picaso::Label m_title;

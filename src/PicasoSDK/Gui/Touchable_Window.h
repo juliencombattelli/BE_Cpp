@@ -26,8 +26,10 @@ public:
 
 	virtual void show() = 0;
 	void update() {m_touch_dispatcher.touch_periodic_task(m_lcd); custom_update(); }
+
 protected:
 	virtual void custom_update() {}
+
 	Touch_Dispatcher m_touch_dispatcher;
 };
 

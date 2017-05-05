@@ -26,8 +26,6 @@ public:
     SliderH(Serial_Commander& lcd, Color border_color, Color fill_color = Color::BLACK, Color button_color = Color::GRAY, uint16_t origin_x = 0, uint16_t origin_y = 0, uint16_t width = 20, uint16_t height = 20, bool auto_update = false);
     SliderH(Serial_Commander& lcd, bool auto_update = false);
 
-	virtual ~SliderH();
-
     virtual void show() override;
     virtual void create(Color border_color = Color::ORANGE, Color fill_color = Color::BLACK, Color button_color = Color::GRAY, uint16_t x_origin = 0, uint16_t y_origin = 0, uint16_t width = 20, uint16_t height = 20) override;
 

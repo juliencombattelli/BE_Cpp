@@ -217,9 +217,6 @@ public :
 
 private :
 
-	mraa::Uart m_serial;
-	mraa::Gpio m_rst;
-
 	void clear_rx_buffer();
 
 	void write_commande(const uint8_t* cmd, uint16_t size);
@@ -231,6 +228,9 @@ private :
 
 	/*UART function*/
 	uint8_t code_baud_rate(uint32_t baud_rate);
+
+	mraa::Uart m_serial;
+	mraa::Gpio m_rst;
 };
 
 } // namespace Picaso
