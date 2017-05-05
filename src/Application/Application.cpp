@@ -107,19 +107,19 @@ void Application::send_tilt_command(Sender& s, const Event& e)
 {
 	const Tilt_Change& event = static_cast<decltype(event)>(e);
 
-	int8_t pitch = event.x;
+	float pitch = event.x;
 	if(pitch > 100)
 		pitch = 100;
 	else if(pitch < -100)
 		pitch = -100;
 
-	int8_t roll = event.y;
+	float roll = event.y;
 	if(roll > 100)
 		roll = 100;
 	else if(roll < -100)
 		roll = -100;
 
-	std::vector<int8_t> data{0x02, pitch, roll};
+	std::vector<int8_t> data{0x03, int8_t(pitch), int8_t(roll)};
 
 	std::cout << "Sending tilt command ..." << std::endl;
 
@@ -136,11 +136,9 @@ void Application::send_spreading_command(Sender& s, const Event& e)
 {
 	const Spreading_Change& event = static_cast<decltype(event)>(e);
 
-	uint8_t height = event.height;
-	height = height*255;
+	uint8_t height = event.height*255;
 
-	uint8_t spread = event.spread;
-	spread = spread*255;
+	uint8_t spread = event.spread*255;
 
 	std::vector<uint8_t> data{0x02, spread, height};
 
