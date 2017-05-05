@@ -1,9 +1,13 @@
-/*
- * Application.cpp
- *
- *  Created on: 30 avr. 2017
- *      Author: JulienCombattelli
- */
+//============================================================================
+// Name        : Application.cpp
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 5 may 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a demo application class
+//============================================================================
 
 #include "Application/Application.h"
 #include "Application/Events.h"
@@ -131,13 +135,13 @@ void Application::send_spreading_command(Sender& s, const Event& e)
 {
 	const Spreading_Change& event = (const Spreading_Change&)e;
 
-	uint8_t heigth = event.heigth;
-	heigth = heigth*255;
+	uint8_t height = event.height;
+	height = height*255;
 
 	uint8_t spread = event.spread;
 	spread = spread*255;
 
-	std::vector<uint8_t> data{0x02, spread, heigth};
+	std::vector<uint8_t> data{0x02, spread, height};
 
 	std::cout << "Sending spreading command ..." << std::endl;
 

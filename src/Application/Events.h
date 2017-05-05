@@ -1,9 +1,13 @@
-/*
- * Events.h
- *
- *  Created on: 30 avr. 2017
- *      Author: JulienCombattelli
- */
+//============================================================================
+// Name        : Events.h
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 5 may 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides all event classes used by the demo application
+//============================================================================
 
 #ifndef APPLICATION_EVENTS_H_
 #define APPLICATION_EVENTS_H_
@@ -58,10 +62,10 @@ struct Tilt_Change : public Event
 
 struct Spreading_Change : public Event
 {
-	Spreading_Change(float _spread, float _heigth) : spread(_spread), heigth(_heigth) {}
+	Spreading_Change(float _spread, float _height) : spread(_spread), height(_height) {}
 
 	float spread;
-	float heigth;
+	float height;
 };
 
 #endif /* APPLICATION_EVENTS_H_ */

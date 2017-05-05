@@ -1,9 +1,14 @@
-/*
- * Window_Manager.cpp
- *
- *  Created on: 30 avr. 2017
- *      Author: guill
- */
+//============================================================================
+// Name        : Window_Manager.cpp
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 30 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a window manager class responsible of the demo
+//				 app windows lifetime
+//============================================================================
 
 #include "Application/Windows/Window_Manager.h"
 

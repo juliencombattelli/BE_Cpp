@@ -1,9 +1,14 @@
-/*
- * Spreading_Window.h
- *
- *  Created on: 29 avr. 2017
- *      Author: guill
- */
+//============================================================================
+// Name        : Spreading_Window.h
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 29 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a window enabling spreading and height control
+//				 of target
+//============================================================================
 
 #ifndef APPLICATION_WINDOWS_SPREADING_WINDOW_H_
 #define APPLICATION_WINDOWS_SPREADING_WINDOW_H_
@@ -23,11 +28,11 @@ private:
 
 	void slider_moved_handler(Sender& s, const Event& event);
 
-	void heigth_change(float value);
+	void height_change(float value);
 	void spread_change(float value);
 
 	Picaso::Label m_title;
-	Picaso::SliderV m_heigth;
+	Picaso::SliderV m_height;
 	Picaso::SliderH m_spread;
 };
 

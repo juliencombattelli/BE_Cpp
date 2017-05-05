@@ -1,9 +1,13 @@
-/*
- * Window_Base.h
- *
- *  Created on: 25 avr. 2017
- *      Author: guill
- */
+//============================================================================
+// Name        : Window_Base.h
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 25 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a window base class
+//============================================================================
 
 #ifndef PICASOSDK_GUI_WINDOW_BASE_H_
 #define PICASOSDK_GUI_WINDOW_BASE_H_

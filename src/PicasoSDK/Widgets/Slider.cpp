@@ -6,7 +6,7 @@
 // Version     : 1.0.0
 // Copyright   : This file is part of PicasoSDK project which is released under
 //               MIT license. See file LICENSE.txt for full license details
-// Description : It provides a slider widget
+// Description : It provides a slider base widget
 //============================================================================
 
 #include "PicasoSDK/Widgets/Slider.h"

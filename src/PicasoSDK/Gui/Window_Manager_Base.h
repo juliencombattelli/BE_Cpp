@@ -1,9 +1,13 @@
-/*
- * WindowManagerBase.h
- *
- *  Created on: 30 avr. 2017
- *      Author: JulienCombattelli
- */
+//============================================================================
+// Name        : Window_Manager_Base.h
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 30 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a window manager base class
+//============================================================================
 
 #ifndef PICASOSDK_GUI_WINDOW_MANAGER_BASE_H_
 #define PICASOSDK_GUI_WINDOW_MANAGER_BASE_H_

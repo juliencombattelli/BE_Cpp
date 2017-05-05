@@ -1,9 +1,14 @@
-/*
- * Process_Monitor.cpp
- *
- *  Created on: 30 avr. 2017
- *      Author: guill
- */
+//============================================================================
+// Name        : Process_Monitor.cpp
+// Authors     : Julien Combattelli & Guillaume Sarthou
+// EMail       : open.pode@gmail.com
+// Date		   : 30 avr. 2017
+// Version     : 1.0.0
+// Copyright   : This file is part of PicasoSDK project which is released under
+//               MIT license. See file LICENSE.txt for full license details
+// Description : It provides a window enabling process monitoring of the target
+// 				 robot Linux environment
+//============================================================================
 
 #include "Application/Windows/Process_Monitor.h"
 

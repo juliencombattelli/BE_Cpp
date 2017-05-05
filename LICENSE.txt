@@ -1,4 +1,4 @@
-MIT License
+MIT License - PicasoSDK project
 
 Copyright (c) 2017 Julien Combattelli & Guillaume Sarthou
 
